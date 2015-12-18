@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
 import work.samoje.colors.combiner.selection.ColorCombinerBus;
+import work.samoje.colors.drawing.ColorPanel;
 import work.samoje.colors.filter.selection.FilterBus;
 import work.samoje.colors.structures.ColorGrid;
 

@@ -1,4 +1,4 @@
-package work.samoje.colors;
+package work.samoje.colors.drawing;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,8 +11,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import work.samoje.colors.drawing.ColorOverrideProvider;
 
 public class ColorPanel extends JPanel implements ColorOverrideProvider {
     private static final long serialVersionUID = 1L;
