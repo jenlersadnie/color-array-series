@@ -1,17 +1,15 @@
 package work.samoje.colors.combiner.combiners;
 
-
 public class RGBScaleAvg extends BinaryValueWiseCombiner {
     private final double muliplier;
 
-    public RGBScaleAvg(final double modifier, final double modifierScale)
-    {
+    public RGBScaleAvg(final double modifier, final double modifierScale) {
         this.muliplier = 0.25 + (modifier * 0.5) / modifierScale;
     }
 
     @Override
-    protected int combine(final int left, final int right)
-    {
-        return Math.max(0, Math.min((int)Math.floor((left+right)*muliplier), 255));
+    protected int combine(final int left, final int right) {
+        return Math.max(0,
+                Math.min((int) Math.floor((left + right) * muliplier), 255));
     }
 }

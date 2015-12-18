@@ -24,13 +24,13 @@ public class ScaleCapListener implements ActionListener {
     @Override
     public void actionPerformed(final ActionEvent e) {
         /*
-        final String root = "color-array-"+System.currentTimeMillis();
-        final File directory = new File(root);
-        directory.mkdir();
-        for (int value = 1; value < CombinePanel.VALUE_SELECTOR_RANGE; value++) {
-            final File file = new File(root + "/frame-" + value + ".png");
-            combinerProvider.setMultiplier(value);
-            ImageSaver.saveImageForGrid(colorGrid.getRawGrid(), filterProvider.getFilter(), file);
-        }TODO */
+         * final String root = "color-array-"+System.currentTimeMillis(); final
+         * File directory = new File(root); directory.mkdir(); for (int value =
+         * 1; value < CombinePanel.VALUE_SELECTOR_RANGE; value++) { final File
+         * file = new File(root + "/frame-" + value + ".png");
+         * combinerProvider.setMultiplier(value);
+         * ImageSaver.saveImageForGrid(colorGrid.getRawGrid(),
+         * filterProvider.getFilter(), file); }TODO
+         */
     }
 }

@@ -15,8 +15,8 @@ public class GeneratedPixel implements Pixel {
     private boolean validated;
     private Color color;
 
-    public GeneratedPixel(final CombinePanel combinePanel, final List<Pixel> parents, final Point position)
-    {
+    public GeneratedPixel(final CombinePanel combinePanel,
+            final List<Pixel> parents, final Point position) {
         this.combinePanel = combinePanel;
         this.parents = registerWithParents(parents);
         this.position = position;
@@ -33,10 +33,10 @@ public class GeneratedPixel implements Pixel {
         return parents;
     }
 
-    private void setColor()
-    {
-        //TODO final Color[] parentArray = parents.stream().map(p -> p.getColor()).toArray();
-        //TODO color = combinePanel.getCombiner().combine(parentArray);
+    private void setColor() {
+        // TODO final Color[] parentArray = parents.stream().map(p ->
+        // p.getColor()).toArray();
+        // TODO color = combinePanel.getCombiner().combine(parentArray);
     }
 
     @Override
@@ -45,8 +45,7 @@ public class GeneratedPixel implements Pixel {
     }
 
     @Override
-    public void validate()
-    {
+    public void validate() {
         if (!validated) {
             validated = true;
             for (final Pixel child : children) {
@@ -68,8 +67,7 @@ public class GeneratedPixel implements Pixel {
     }
 
     @Override
-    public void update()
-    {
+    public void update() {
         if (validated) {
             setColor();
             for (final Pixel child : children) {
@@ -81,13 +79,9 @@ public class GeneratedPixel implements Pixel {
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return String.format("Color: (%s, %s, %s), Position: (%s, %s)",
-                color.getRed(),
-                color.getGreen(),
-                color.getBlue(),
-                position.getX(),
-                position.getY());
+                color.getRed(), color.getGreen(), color.getBlue(),
+                position.getX(), position.getY());
     }
 }

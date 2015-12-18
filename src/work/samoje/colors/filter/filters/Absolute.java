@@ -10,6 +10,7 @@ public class Absolute implements Filter {
     }
 
     private int abs(final Color a) {
-        return ((a.getRed() + a.getGreen() + a.getBlue()) > (255 * 3/2)) ? 255 : 0;
+        return ((a.getRed() + a.getGreen() + a.getBlue()) > (255 * 3 / 2)) ? 255
+                : 0;
     }
 }

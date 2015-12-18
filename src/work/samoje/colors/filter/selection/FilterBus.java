@@ -24,8 +24,7 @@ public class FilterBus extends Observable implements FilterProvider {
         this.multiplier = 0;
     }
 
-    public void update(final EnumSet<FilterMethod> filters, final int multiplier)
-    {
+    public void update(final EnumSet<FilterMethod> filters, final int multiplier) {
         this.filters = filters;
         this.multiplier = multiplier;
         setChanged();
@@ -34,20 +33,25 @@ public class FilterBus extends Observable implements FilterProvider {
 
     @Override
     public Filter getFilter() {
-        final List<Filter> chosenFilters = filters(multiplier).entrySet().stream()
-                .filter(entry -> filters.contains(entry.getKey()))
+        final List<Filter> chosenFilters = filters(multiplier).entrySet()
+                .stream().filter(entry -> filters.contains(entry.getKey()))
                 .map(entry -> entry.getValue())
                 .collect(Collectors.<Filter> toList());
         return new MetaFilter(chosenFilters);
     }
 
-    public Map<FilterMethod, Filter> filters(final int value)
-    {
+    @Override
+    public EnumSet<FilterMethod> getFilterMethods() {
+        return filters;
+    }
+
+    public Map<FilterMethod, Filter> filters(final int value) {
         final Map<FilterMethod, Filter> filterMap = new HashMap<>();
         filterMap.put(FilterMethod.NONE, new NoFilter());
         filterMap.put(FilterMethod.ABSOLUTE, new Absolute());
         filterMap.put(FilterMethod.ABSOLUTE_RGB, new AbsoluteRGB());
-        //filterMap.put(FilterMethod.RGB_SCALE_AVG, new RGBScaleAvg(value, VALUE_SELECTOR_RANGE));
+        // filterMap.put(FilterMethod.RGB_SCALE_AVG, new RGBScaleAvg(value,
+        // VALUE_SELECTOR_RANGE));
         return filterMap;
     }
 }

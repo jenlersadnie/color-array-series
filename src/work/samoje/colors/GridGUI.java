@@ -52,8 +52,10 @@ public class GridGUI {
         final ColorPanel colorPanel = new ColorPanel();
         final ColorCombinerBus colorCombinerBus = new ColorCombinerBus();
         final FilterBus filterBus = new FilterBus();
-        final Canvas canvas = new Canvas(new ColorGrid(W, H, colorCombinerBus), filterBus);
-        final ActionPanel actionPanel = new ActionPanel(canvas, colorPanel, colorCombinerBus, filterBus);
+        final Canvas canvas = new Canvas(new ColorGrid(W, H, colorCombinerBus),
+                filterBus);
+        final ActionPanel actionPanel = new ActionPanel(canvas, colorPanel,
+                colorCombinerBus, filterBus);
 
         canvas.addMouseListener(new CanvasMouseListener(canvas, colorPanel));
         pane.add(new JScrollPane(canvas), BorderLayout.CENTER);
@@ -70,8 +72,7 @@ public class GridGUI {
         pane.add(south, BorderLayout.SOUTH);
     }
 
-    private BorderLayout getLayout()
-    {
+    private BorderLayout getLayout() {
         final BorderLayout layout = new BorderLayout();
         layout.setHgap(4);
         layout.setVgap(4);

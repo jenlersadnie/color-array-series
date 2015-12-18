@@ -26,13 +26,11 @@ public class ColorGrid extends Observable implements ColorStructure, Observer {
         this.combinerProvider.addObserver(this);
     }
 
-    public int getWidth()
-    {
+    public int getWidth() {
         return width;
     }
 
-    public int getHeight()
-    {
+    public int getHeight() {
         return height;
     }
 
@@ -70,8 +68,7 @@ public class ColorGrid extends Observable implements ColorStructure, Observer {
         return Optional.ofNullable(grid[x][y]);
     }
 
-    public void writeColorToPoints(final Set<Point> points, final Color color)
-    {
+    public void writeColorToPoints(final Set<Point> points, final Color color) {
         for (final Point point : points) {
             writeColorToCoords(point.x, point.y, color);
         }
@@ -82,9 +79,9 @@ public class ColorGrid extends Observable implements ColorStructure, Observer {
         if (x == 0 || y == 0) {
             grid[y][x] = color;
         } else if (x > y) {
-            grid[0][x] = color;
+            grid[0][Math.min(x, height - 1)] = color;
         } else if (y > x) {
-            grid[y][0] = color;
+            grid[Math.min(y, width - 1)][0] = color;
         }
     }
 

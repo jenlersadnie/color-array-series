@@ -5,8 +5,12 @@ import java.awt.Point;
 
 public interface Pixel {
     void addChild(Pixel childPixel);
+
     void update();
+
     Color getColor();
+
     Point getPosition();
+
     void validate();
 }

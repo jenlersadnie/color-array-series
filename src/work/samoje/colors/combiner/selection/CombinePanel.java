@@ -19,6 +19,7 @@ import javax.swing.event.ChangeListener;
 
 public class CombinePanel extends JPanel {
     private static final long serialVersionUID = 1L;
+    private static final int INITIAL_VALUE = 10;
 
     private final JSlider valueSelector;
     private final JLabel combinerLabel;
@@ -33,24 +34,23 @@ public class CombinePanel extends JPanel {
         this.add(combinerLabel);
 
         this.add(new JLabel());
-        this.valueLabel = new JLabel("10");
+        this.valueLabel = new JLabel(Integer.toString(INITIAL_VALUE));
         this.add(valueLabel);
         this.valueSelector = new JSlider(0, ColorCombinerBus.MAX_MULTIPLIER);
         this.valueSelector.setOrientation(SwingConstants.HORIZONTAL);
-        this.valueSelector.setValue(10);
-        this.valueSelector.setPreferredSize(new Dimension(130,30));
+        this.valueSelector.setValue(INITIAL_VALUE);
+        this.valueSelector.setPreferredSize(new Dimension(130, 30));
         this.valueSelector.addChangeListener(new RevisedMethodListener());
         this.add(valueSelector);
 
         this.add(new JLabel());
         selectors = new ArrayList<JCheckBox>();
         for (final CombineMethod method : CombineMethod.values()) {
-            if (method != CombineMethod.SPECIAL) {
-                final JCheckBox box = new JCheckBox(method.name(), false);
-                selectors.add(box);
-                box.addActionListener(new RevisedMethodListener());
-                this.add(box);
-            }
+            final JCheckBox box = new JCheckBox(method.name(), combinerProvider
+                    .getCombineMethods().contains(method));
+            selectors.add(box);
+            box.addActionListener(new RevisedMethodListener());
+            this.add(box);
         }
 
         validate();
@@ -70,12 +70,8 @@ public class CombinePanel extends JPanel {
         }
     }
 
-    public CombineMethod defaultMethod()
-    {
-        return CombineMethod.RGB_AVG;
-    }
-
-    public class RevisedMethodListener implements ActionListener, ChangeListener {
+    public class RevisedMethodListener implements ActionListener,
+            ChangeListener {
         @Override
         public void actionPerformed(final ActionEvent e) {
             valueLabel.setText(Integer.toString(valueSelector.getValue()));
@@ -90,8 +86,7 @@ public class CombinePanel extends JPanel {
     }
 
     @Override
-    public Dimension getPreferredSize()
-    {
+    public Dimension getPreferredSize() {
         return new Dimension(160, 280);
     }
 }

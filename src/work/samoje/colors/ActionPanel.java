@@ -47,15 +47,13 @@ public class ActionPanel extends JPanel {
         reinit.addActionListener(new InitializeButtonListener());
         this.add(reinit);
         /*
-        final JButton screenCap = new JButton("Save Capture");
-        screenCap.addActionListener(new ScreenCapListener(canvas.getGrid(),
-                filterPanel));
-        this.add(screenCap);
-
-        final JButton fullScaleCapture = new JButton("Save Clips");
-        fullScaleCapture.addActionListener(new ScaleCapListener(canvas
-                .getGrid(), combinerPanel, filterPanel));
-        this.add(fullScaleCapture);
+         * final JButton screenCap = new JButton("Save Capture");
+         * screenCap.addActionListener(new ScreenCapListener(canvas.getGrid(),
+         * filterPanel)); this.add(screenCap);
+         * 
+         * final JButton fullScaleCapture = new JButton("Save Clips");
+         * fullScaleCapture.addActionListener(new ScaleCapListener(canvas
+         * .getGrid(), combinerPanel, filterPanel)); this.add(fullScaleCapture);
          */
 
         validate();

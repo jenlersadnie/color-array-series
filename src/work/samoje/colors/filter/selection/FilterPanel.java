@@ -36,19 +36,18 @@ public class FilterPanel extends JPanel {
         this.valueSelector = new JSlider(0, FilterBus.MAX_MULTIPLIER);
         this.valueSelector.setOrientation(SwingConstants.HORIZONTAL);
         this.valueSelector.setValue(10);
-        this.valueSelector.setPreferredSize(new Dimension(130,30));
+        this.valueSelector.setPreferredSize(new Dimension(130, 30));
         this.valueSelector.addChangeListener(new RevisedMethodListener());
         this.add(valueSelector);
 
         this.add(new JLabel());
         selectors = new ArrayList<JCheckBox>();
         for (final FilterMethod method : FilterMethod.values()) {
-            if (method != FilterMethod.SPECIAL) {
-                final JCheckBox box = new JCheckBox(method.name(), false);
-                selectors.add(box);
-                box.addActionListener(new RevisedMethodListener());
-                this.add(box);
-            }
+            final JCheckBox box = new JCheckBox(method.name(), filterBus
+                    .getFilterMethods().contains(method));
+            selectors.add(box);
+            box.addActionListener(new RevisedMethodListener());
+            this.add(box);
         }
 
         validate();
@@ -68,7 +67,8 @@ public class FilterPanel extends JPanel {
         }
     }
 
-    public class RevisedMethodListener implements ActionListener, ChangeListener {
+    public class RevisedMethodListener implements ActionListener,
+            ChangeListener {
         @Override
         public void actionPerformed(final ActionEvent e) {
             filterBus.update(selectedValues(), valueSelector.getValue());
@@ -81,8 +81,7 @@ public class FilterPanel extends JPanel {
     }
 
     @Override
-    public Dimension getPreferredSize()
-    {
+    public Dimension getPreferredSize() {
         return new Dimension(160, 160);
     }
 }

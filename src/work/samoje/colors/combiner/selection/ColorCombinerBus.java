@@ -49,6 +49,11 @@ public class ColorCombinerBus extends Observable implements CombinerProvider {
         return new MetaCombiner(chosenCombiners);
     }
 
+    @Override
+    public EnumSet<CombineMethod> getCombineMethods() {
+        return combineMethods;
+    }
+
     public Map<CombineMethod, ColorCombiner> combiners(final int value) {
         final Map<CombineMethod, ColorCombiner> combineMap = new HashMap<>();
         combineMap.put(CombineMethod.RGB_AVG, new RGBAvg());

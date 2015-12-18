@@ -9,6 +9,6 @@ public class AbsoluteRGB implements Filter {
     }
 
     private int abs(final int a) {
-        return (a > (255/2)) ? 255 : 0;
+        return (a > (255 / 2)) ? 255 : 0;
     }
 }
