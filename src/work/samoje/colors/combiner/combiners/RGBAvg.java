@@ -1,12 +1,8 @@
 package work.samoje.colors.combiner.combiners;
 
-import java.util.stream.IntStream;
-
-public class RGBAvg extends ValueWiseCombiner {
-
+public class RGBAvg extends BinaryValueWiseCombiner {
     @Override
-    public int combine(final IntStream parentVal)
-    {
-        return (int) parentVal.average().getAsDouble();
+    public int combine(final int left, final int right) {
+        return (int) ((left + right) / 2.0);
     }
 }

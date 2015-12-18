@@ -61,7 +61,11 @@ public class FilterPanel extends JPanel {
                 selections.add(FilterMethod.valueOf(checker.getText()));
             }
         }
-        return EnumSet.copyOf(selections);
+        if (selections.isEmpty()) {
+            return EnumSet.allOf(FilterMethod.class);
+        } else {
+            return EnumSet.copyOf(selections);
+        }
     }
 
     public class RevisedMethodListener implements ActionListener, ChangeListener {

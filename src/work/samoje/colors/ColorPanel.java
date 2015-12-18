@@ -12,7 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class ColorPanel extends JPanel {
+import work.samoje.colors.drawing.ColorOverrideProvider;
+
+public class ColorPanel extends JPanel implements ColorOverrideProvider {
     private static final long serialVersionUID = 1L;
 
     private Color activeColor;
@@ -22,7 +24,7 @@ public class ColorPanel extends JPanel {
 
     public ColorPanel() {
         this.activeColor = Color.RED;
-        this.colorInput = new JTextField("FFFFFF",4);
+        this.colorInput = new JTextField("FFFFFF", 4);
         this.add(colorInput);
 
         this.colorLabel = new JLabel();
@@ -39,8 +41,8 @@ public class ColorPanel extends JPanel {
         validate();
     }
 
-    public Color getColor()
-    {
+    @Override
+    public Color getColor() {
         return activeColor;
     }
 
@@ -51,8 +53,7 @@ public class ColorPanel extends JPanel {
         colorView.repaint();
     }
 
-    private class UpdateListener implements ActionListener
-    {
+    private class UpdateListener implements ActionListener {
         @Override
         public void actionPerformed(final ActionEvent e) {
             syncValues();
@@ -80,8 +81,7 @@ public class ColorPanel extends JPanel {
     }
 
     @Override
-    public Dimension getPreferredSize()
-    {
+    public Dimension getPreferredSize() {
         return new Dimension(160, 120);
     }
 }

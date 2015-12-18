@@ -10,7 +10,7 @@ public class RGBScaleAvg extends BinaryValueWiseCombiner {
     }
 
     @Override
-    protected int binaryCombine(final int left, final int right)
+    protected int combine(final int left, final int right)
     {
         return Math.max(0, Math.min((int)Math.floor((left+right)*muliplier), 255));
     }

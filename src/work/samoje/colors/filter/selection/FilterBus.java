@@ -26,12 +26,9 @@ public class FilterBus extends Observable implements FilterProvider {
 
     public void update(final EnumSet<FilterMethod> filters, final int multiplier)
     {
-        if (filters.isEmpty()) {
-            this.filters = EnumSet.allOf(FilterMethod.class);
-        } else {
-            this.filters = filters;
-        }
+        this.filters = filters;
         this.multiplier = multiplier;
+        setChanged();
         notifyObservers();
     }
 

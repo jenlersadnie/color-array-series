@@ -8,7 +8,7 @@ public class RGBSumMod extends BinaryValueWiseCombiner {
     }
 
     @Override
-    protected int binaryCombine(final int left, final int right) {
+    protected int combine(final int left, final int right) {
         return (left + right) % modulus;
     }
 }

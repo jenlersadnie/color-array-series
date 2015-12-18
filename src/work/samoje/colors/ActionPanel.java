@@ -3,10 +3,8 @@ package work.samoje.colors;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -42,11 +40,11 @@ public class ActionPanel extends JPanel {
         this.add(activeInfoLabel);
 
         final JButton repaintButton = new JButton("Repaint");
-        repaintButton.addActionListener(new RepaintListener());
+        repaintButton.addActionListener(new RepaintButtonListener());
         this.add(repaintButton);
 
         final JButton reinit = new JButton("Re-initialize");
-        reinit.addActionListener(new ReInitListener());
+        reinit.addActionListener(new InitializeButtonListener());
         this.add(reinit);
         /*
         final JButton screenCap = new JButton("Save Capture");
@@ -63,22 +61,17 @@ public class ActionPanel extends JPanel {
         validate();
     }
 
-    public void recolorCanvas(final Set<Point> positions) {
-        canvas.updateBlocks(positions, colorPanel.getColor());
-    }
-
-    public class RepaintListener implements ActionListener {
+    public class RepaintButtonListener implements ActionListener {
         @Override
         public void actionPerformed(final ActionEvent e) {
             canvas.repaint();
         }
     }
 
-    public class ReInitListener implements ActionListener {
+    public class InitializeButtonListener implements ActionListener {
         @Override
         public void actionPerformed(final ActionEvent e) {
             canvas.initialize();
-            ;
         }
     }
 

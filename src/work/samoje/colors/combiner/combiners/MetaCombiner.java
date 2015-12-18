@@ -13,8 +13,8 @@ public class MetaCombiner implements ColorCombiner {
     }
 
     @Override
-    public Color combine(final Color... parents) {
+    public Color combine(final Color parentLeft, final Color parentRight) {
         final int choice = rand.nextInt(combiners.size());
-        return combiners.get(choice).combine(parents);
+        return combiners.get(choice).combine(parentLeft, parentRight);
     }
 }

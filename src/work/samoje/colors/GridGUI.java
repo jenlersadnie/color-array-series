@@ -8,6 +8,7 @@ import javax.swing.JScrollPane;
 
 import work.samoje.colors.combiner.selection.ColorCombinerBus;
 import work.samoje.colors.filter.selection.FilterBus;
+import work.samoje.colors.structures.ColorGrid;
 
 public class GridGUI {
     private static final boolean USE_MAX = false;
@@ -49,12 +50,12 @@ public class GridGUI {
         pane.setLayout(getLayout());
 
         final ColorPanel colorPanel = new ColorPanel();
-        final ColorCombinerBus combinePanel = new ColorCombinerBus();
-        final FilterBus filterPanel = new FilterBus();
-        final Canvas canvas = new Canvas(W, H, combinePanel, filterPanel);
-        final ActionPanel actionPanel = new ActionPanel(canvas, colorPanel, combinePanel, filterPanel);
+        final ColorCombinerBus colorCombinerBus = new ColorCombinerBus();
+        final FilterBus filterBus = new FilterBus();
+        final Canvas canvas = new Canvas(new ColorGrid(W, H, colorCombinerBus), filterBus);
+        final ActionPanel actionPanel = new ActionPanel(canvas, colorPanel, colorCombinerBus, filterBus);
 
-        canvas.addMouseListener(new CanvasMouseListener(actionPanel));
+        canvas.addMouseListener(new CanvasMouseListener(canvas, colorPanel));
         pane.add(new JScrollPane(canvas), BorderLayout.CENTER);
 
         final Container west = new Container();

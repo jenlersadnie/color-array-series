@@ -7,12 +7,18 @@ import java.util.Set;
 
 import javax.swing.event.MouseInputAdapter;
 
+import work.samoje.colors.drawing.ColorOverrideProvider;
+
 public class CanvasMouseListener extends MouseInputAdapter {
-    private final ActionPanel actionPanel;
     private Point startPoint = new Point(0, 0);
 
-    public CanvasMouseListener(final ActionPanel actionPanel) {
-        this.actionPanel = actionPanel;
+    private final Canvas canvas;
+    private final ColorOverrideProvider colorOverrideProvider;
+
+    public CanvasMouseListener(final Canvas canvas,
+            final ColorOverrideProvider colorOverrideProvider) {
+        this.canvas = canvas;
+        this.colorOverrideProvider = colorOverrideProvider;
     }
 
     @Override
@@ -22,13 +28,15 @@ public class CanvasMouseListener extends MouseInputAdapter {
 
     @Override
     public void mouseReleased(final MouseEvent e) {
-        actionPanel.recolorCanvas(pointsBetween(startPoint, e.getPoint()));
+        canvas.writeColorToPoints(pointsBetween(startPoint, e.getPoint()),
+                colorOverrideProvider.getColor());
     }
 
     private Set<Point> pointsBetween(final Point start, final Point end) {
         final Set<Point> points = new HashSet<Point>();
         for (int x = Math.min(start.x, end.x); x <= Math.max(start.x, end.x); x++) {
-            for (int y = Math.min(start.y, end.y); y <= Math.max(start.y, end.y); y++) {
+            for (int y = Math.min(start.y, end.y); y <= Math
+                    .max(start.y, end.y); y++) {
                 points.add(new Point(x, y));
             }
         }

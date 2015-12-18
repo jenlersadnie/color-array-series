@@ -1,6 +1,9 @@
 package work.samoje.colors.combiner.combiners;
 
+import java.util.Random;
+
 public class RGBNoisyAvg extends BinaryValueWiseCombiner {
+    private final Random rand = new Random();
     private final double randomnessRange;
 
     public RGBNoisyAvg(final double modifier, final double modifierScale) {
@@ -8,7 +11,7 @@ public class RGBNoisyAvg extends BinaryValueWiseCombiner {
     }
 
     @Override
-    protected int binaryCombine(final int left, final int right) {
+    protected int combine(final int left, final int right) {
         return Math.max(0, Math.min(255, (left + right + randPlusMinus()) / 2));
     }
 

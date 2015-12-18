@@ -63,7 +63,11 @@ public class CombinePanel extends JPanel {
                 selections.add(CombineMethod.valueOf(checker.getText()));
             }
         }
-        return EnumSet.copyOf(selections);
+        if (selections.isEmpty()) {
+            return EnumSet.allOf(CombineMethod.class);
+        } else {
+            return EnumSet.copyOf(selections);
+        }
     }
 
     public CombineMethod defaultMethod()

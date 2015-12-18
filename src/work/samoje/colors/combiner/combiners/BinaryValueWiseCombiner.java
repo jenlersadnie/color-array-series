@@ -1,15 +1,15 @@
 package work.samoje.colors.combiner.combiners;
 
-import java.util.Random;
-import java.util.stream.IntStream;
+import java.awt.Color;
 
-public abstract class BinaryValueWiseCombiner extends ValueWiseCombiner {
-    protected final Random rand = new Random();
-
+public abstract class BinaryValueWiseCombiner implements ColorCombiner {
     @Override
-    protected int combine(final IntStream intStream) {
-        return intStream.reduce(rand.nextInt(255), (left, right) -> binaryCombine(left, right));
+    public Color combine(final Color parentLeft, final Color parentRight) {
+        return new Color(
+                combine(parentLeft.getRed(), parentRight.getRed()),
+                combine(parentLeft.getGreen(), parentRight.getGreen()),
+                combine(parentLeft.getBlue(), parentRight.getBlue()));
     }
 
-    protected abstract int binaryCombine(int left, int right);
+    protected abstract int combine(int left, int right);
 }

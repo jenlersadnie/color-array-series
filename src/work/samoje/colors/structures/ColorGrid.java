@@ -1,12 +1,16 @@
 package work.samoje.colors.structures;
 
 import java.awt.Color;
+import java.awt.Point;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Optional;
+import java.util.Set;
 
 import work.samoje.colors.combiner.combiners.ColorCombiner;
 import work.samoje.colors.combiner.selection.ColorCombinerBus;
 
-public class ColorGrid implements ColorStructure {
+public class ColorGrid extends Observable implements ColorStructure, Observer {
     private final ColorCombinerBus combinerProvider;
     private final Color[][] grid;
     private final int width;
@@ -18,6 +22,8 @@ public class ColorGrid implements ColorStructure {
         this.height = height;
         this.grid = new Color[width][height];
         this.combinerProvider = combinerProvider;
+
+        this.combinerProvider.addObserver(this);
     }
 
     public int getWidth()
@@ -57,16 +63,22 @@ public class ColorGrid implements ColorStructure {
         }
     }
 
-    @Override
     public Optional<Color> getColorForPoint(final int x, final int y) {
         if (x < 0 || x > width || y < 0 || y > height) {
             return Optional.empty();
         }
-        return Optional.of(grid[x][y]);
+        return Optional.ofNullable(grid[x][y]);
     }
 
-    @Override
-    public void overrideValues(final int x, final int y, final Color color) {
+    public void writeColorToPoints(final Set<Point> points, final Color color)
+    {
+        for (final Point point : points) {
+            writeColorToCoords(point.x, point.y, color);
+        }
+        recalculateContents();
+    }
+
+    private void writeColorToCoords(final int x, final int y, final Color color) {
         if (x == 0 || y == 0) {
             grid[y][x] = color;
         } else if (x > y) {
@@ -74,11 +86,17 @@ public class ColorGrid implements ColorStructure {
         } else if (y > x) {
             grid[y][0] = color;
         }
-        recalculateContents();
     }
 
     @Deprecated
     public Color[][] getRawGrid() {
         return grid;
+    }
+
+    @Override
+    public void update(final Observable o, final Object arg) {
+        recalculateContents();
+        setChanged();
+        notifyObservers();
     }
 }
