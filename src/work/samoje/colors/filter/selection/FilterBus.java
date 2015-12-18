@@ -54,4 +54,14 @@ public class FilterBus extends Observable implements FilterProvider {
         // VALUE_SELECTOR_RANGE));
         return filterMap;
     }
+
+    @Override
+    public FilterState getFilterState() {
+        return new FilterState(filters, multiplier);
+    }
+
+    @Override
+    public void load(final FilterState state) {
+        update(state.getFilters(), state.getMultiplier());
+    }
 }

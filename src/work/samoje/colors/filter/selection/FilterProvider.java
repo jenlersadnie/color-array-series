@@ -8,4 +8,7 @@ public interface FilterProvider {
     public Filter getFilter();
 
     public EnumSet<FilterMethod> getFilterMethods();
+
+    public FilterState getFilterState();
+    public void load(FilterState state);
 }

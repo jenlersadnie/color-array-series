@@ -14,7 +14,7 @@ import javax.swing.JComponent;
 
 import work.samoje.colors.filter.filters.Filter;
 import work.samoje.colors.filter.selection.FilterBus;
-import work.samoje.colors.structures.ColorGrid;
+import work.samoje.colors.persistence.ImageSaver;
 
 public class Canvas extends JComponent implements Observer {
     private static final long serialVersionUID = 1L;
@@ -69,10 +69,14 @@ public class Canvas extends JComponent implements Observer {
         }
     }
 
-    public void saveCapture() {
+    public void saveCapture(final String fileName) {
         ImageSaver.saveImageForGrid(grid.getRawGrid(),
                 filterProvider.getFilter(),
-                new File("out/color-array-" + System.currentTimeMillis() + ".png"));
+                new File(fileName));
+    }
+
+    public CanvasState getCanvasState() {
+        return new CanvasState(grid.getGridState(), filterProvider.getFilterState());
     }
 
     @Override

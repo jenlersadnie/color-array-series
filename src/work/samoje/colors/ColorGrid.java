@@ -1,4 +1,4 @@
-package work.samoje.colors.structures;
+package work.samoje.colors;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -10,7 +10,7 @@ import java.util.Set;
 import work.samoje.colors.combiner.combiners.ColorCombiner;
 import work.samoje.colors.combiner.selection.ColorCombinerBus;
 
-public class ColorGrid extends Observable implements ColorStructure, Observer {
+public class ColorGrid extends Observable implements Observer {
     private final ColorCombinerBus combinerProvider;
     private final Color[][] grid;
     private final int width;
@@ -22,7 +22,6 @@ public class ColorGrid extends Observable implements ColorStructure, Observer {
         this.height = height;
         this.grid = new Color[width][height];
         this.combinerProvider = combinerProvider;
-
         this.combinerProvider.addObserver(this);
     }
 
@@ -34,7 +33,6 @@ public class ColorGrid extends Observable implements ColorStructure, Observer {
         return height;
     }
 
-    @Override
     public void initialize() {
         final ColorCombiner combiner = combinerProvider.getCombiner();
 
@@ -51,7 +49,6 @@ public class ColorGrid extends Observable implements ColorStructure, Observer {
         recalculateContents();
     }
 
-    @Override
     public void recalculateContents() {
         final ColorCombiner combiner = combinerProvider.getCombiner();
         for (int w = 1; w < width; w++) {
@@ -83,6 +80,10 @@ public class ColorGrid extends Observable implements ColorStructure, Observer {
         } else if (y > x) {
             grid[Math.min(y, width - 1)][0] = color;
         }
+    }
+
+    public GridState getGridState() {
+        return new GridState(combinerProvider.getCombinerState());
     }
 
     @Deprecated

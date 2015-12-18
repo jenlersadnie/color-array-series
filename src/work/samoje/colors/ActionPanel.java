@@ -5,6 +5,8 @@ import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.UUID;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -14,6 +16,8 @@ import work.samoje.colors.combiner.selection.CombinePanel;
 import work.samoje.colors.drawing.ColorPanel;
 import work.samoje.colors.filter.selection.FilterBus;
 import work.samoje.colors.filter.selection.FilterPanel;
+import work.samoje.colors.persistence.StateSaver;
+
 
 public class ActionPanel extends JPanel {
     private static final long serialVersionUID = 1L;
@@ -55,16 +59,29 @@ public class ActionPanel extends JPanel {
     public class ScreenCapListener implements ActionListener {
         @Override
         public void actionPerformed(final ActionEvent e) {
-            canvas.saveCapture();
+            final String path = String.format("out/color-array-%s/", UUID.randomUUID());
+            final File filePath = new File(path);
+            filePath.mkdirs();
+
+            StateSaver.saveStateToPath(canvas.getCanvasState(), filePath);
+
+            final String imagePath = path + "capture.png";
+            canvas.saveCapture(imagePath);
         }
     }
 
     public class CombinerClipsListener implements ActionListener {
         @Override
         public void actionPerformed(final ActionEvent e) {
+            final String path = String.format("out/color-array-%s/", UUID.randomUUID());
+            final File filePath = new File(path);
+            filePath.mkdirs();
+            StateSaver.saveStateToPath(canvas.getCanvasState(), filePath);
+
             for (int value = 0; value < combinePanel.getMaxMultiplier(); value++) {
                 combinePanel.setMultiplier(value);
-                canvas.saveCapture();
+                final String imagePath = path + "capture-" + value + ".png";
+                canvas.saveCapture(imagePath);
             }
         }
     }

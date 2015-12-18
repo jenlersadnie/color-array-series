@@ -1,4 +1,4 @@
-package work.samoje.colors;
+package work.samoje.colors.persistence;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;

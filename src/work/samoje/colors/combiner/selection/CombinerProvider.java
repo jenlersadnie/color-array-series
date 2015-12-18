@@ -8,4 +8,7 @@ public interface CombinerProvider {
     public ColorCombiner getCombiner();
 
     public EnumSet<CombineMethod> getCombineMethods();
+
+    public CombinerState getCombinerState();
+    public void load(CombinerState state);
 }

@@ -66,4 +66,14 @@ public class ColorCombinerBus extends Observable implements CombinerProvider {
         combineMap.put(CombineMethod.RGB_CHOOSER, new RGBChooser());
         return combineMap;
     }
+
+    @Override
+    public CombinerState getCombinerState() {
+        return new CombinerState(combineMethods, multiplier);
+    }
+
+    @Override
+    public void load(final CombinerState state) {
+        update(state.getCombiners(), state.getMultiplier());
+    }
 }
