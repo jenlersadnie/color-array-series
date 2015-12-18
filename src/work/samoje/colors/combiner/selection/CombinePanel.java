@@ -36,7 +36,7 @@ public class CombinePanel extends JPanel {
         this.add(new JLabel());
         this.valueLabel = new JLabel(Integer.toString(INITIAL_VALUE));
         this.add(valueLabel);
-        this.valueSelector = new JSlider(0, ColorCombinerBus.MAX_MULTIPLIER);
+        this.valueSelector = new JSlider(0, getMaxMultiplier());
         this.valueSelector.setOrientation(SwingConstants.HORIZONTAL);
         this.valueSelector.setValue(INITIAL_VALUE);
         this.valueSelector.setPreferredSize(new Dimension(130, 30));
@@ -56,6 +56,14 @@ public class CombinePanel extends JPanel {
         validate();
     }
 
+    public void setMultiplier(final int value) {
+        this.valueSelector.setValue(value);
+    }
+
+    public int getMaxMultiplier() {
+        return ColorCombinerBus.MAX_MULTIPLIER;
+    }
+
     private EnumSet<CombineMethod> selectedValues() {
         final Set<CombineMethod> selections = new HashSet<CombineMethod>();
         for (final JCheckBox checker : selectors) {
@@ -70,8 +78,7 @@ public class CombinePanel extends JPanel {
         }
     }
 
-    public class RevisedMethodListener implements ActionListener,
-            ChangeListener {
+    public class RevisedMethodListener implements ActionListener, ChangeListener {
         @Override
         public void actionPerformed(final ActionEvent e) {
             valueLabel.setText(Integer.toString(valueSelector.getValue()));

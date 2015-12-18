@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Optional;
@@ -68,6 +69,12 @@ public class Canvas extends JComponent implements Observer {
         }
     }
 
+    public void saveCapture() {
+        ImageSaver.saveImageForGrid(grid.getRawGrid(),
+                filterProvider.getFilter(),
+                new File("out/color-array-" + System.currentTimeMillis() + ".png"));
+    }
+
     @Override
     public void paintComponent(final Graphics g) {
         fillGrid(g);
@@ -88,11 +95,6 @@ public class Canvas extends JComponent implements Observer {
     public Dimension getPreferredSize() {
         return new Dimension((grid.getHeight() * BOX_WIDTH) + 2,
                 (grid.getWidth() * BOX_WIDTH) + 2);
-    }
-
-    @Deprecated
-    public ColorGrid getGrid() {
-        return grid;
     }
 
     @Override

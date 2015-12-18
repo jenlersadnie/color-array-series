@@ -1,4 +1,4 @@
-package work.samoje.colors.screencapture;
+package work.samoje.colors;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;

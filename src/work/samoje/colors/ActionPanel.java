@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import work.samoje.colors.combiner.selection.ColorCombinerBus;
@@ -18,53 +17,32 @@ import work.samoje.colors.filter.selection.FilterPanel;
 
 public class ActionPanel extends JPanel {
     private static final long serialVersionUID = 1L;
-    private final ColorPanel colorPanel;
-    private final CombinePanel combinerPanel;
-    private final FilterPanel filterPanel;
     private final Canvas canvas;
-    private final JLabel activeInfoLabel;
+    private final CombinePanel combinePanel;
 
     public ActionPanel(final Canvas canvas, final ColorPanel colorPanel,
             final ColorCombinerBus combinerProvider, final FilterBus filterBus) {
         this.canvas = canvas;
+        this.combinePanel = new CombinePanel(combinerProvider);
 
-        this.colorPanel = colorPanel;
         this.add(colorPanel);
+        this.add(combinePanel);
+        this.add(new FilterPanel(filterBus));
 
-        this.combinerPanel = new CombinePanel(combinerProvider);
-        this.add(combinerPanel);
-
-        this.filterPanel = new FilterPanel(filterBus);
-        this.add(filterPanel);
-
-        this.activeInfoLabel = new JLabel("                               ");
-        this.add(activeInfoLabel);
-
-        final JButton repaintButton = new JButton("Repaint");
-        repaintButton.addActionListener(new RepaintButtonListener());
-        this.add(repaintButton);
-
-        final JButton reinit = new JButton("Re-initialize");
+        final JButton reinit = new JButton("Initialize");
         reinit.addActionListener(new InitializeButtonListener());
         this.add(reinit);
-        /*
-         * final JButton screenCap = new JButton("Save Capture");
-         * screenCap.addActionListener(new ScreenCapListener(canvas.getGrid(),
-         * filterPanel)); this.add(screenCap);
-         * 
-         * final JButton fullScaleCapture = new JButton("Save Clips");
-         * fullScaleCapture.addActionListener(new ScaleCapListener(canvas
-         * .getGrid(), combinerPanel, filterPanel)); this.add(fullScaleCapture);
-         */
+
+        final JButton screenCap = new JButton("Save Capture");
+        screenCap.addActionListener(new ScreenCapListener());
+        this.add(screenCap);
+
+        final JButton fullScaleCapture = new JButton("Save All Clips");
+        fullScaleCapture.addActionListener(new CombinerClipsListener());
+        this.add(fullScaleCapture);
+
 
         validate();
-    }
-
-    public class RepaintButtonListener implements ActionListener {
-        @Override
-        public void actionPerformed(final ActionEvent e) {
-            canvas.repaint();
-        }
     }
 
     public class InitializeButtonListener implements ActionListener {
@@ -74,13 +52,36 @@ public class ActionPanel extends JPanel {
         }
     }
 
+    public class ScreenCapListener implements ActionListener {
+        @Override
+        public void actionPerformed(final ActionEvent e) {
+            canvas.saveCapture();
+        }
+    }
+
+    public class CombinerClipsListener implements ActionListener {
+        @Override
+        public void actionPerformed(final ActionEvent e) {
+            for (int value = 0; value < combinePanel.getMaxMultiplier(); value++) {
+                combinePanel.setMultiplier(value);
+                canvas.saveCapture();
+            }
+        }
+    }
+
     @Override
     public LayoutManager getLayout() {
-        return new GridLayout(9, 1);
+        return new GridLayout(4, 1);
     }
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(200, 400);
+        return new Dimension(200, 780);
     }
+
+    @Override
+    public Dimension getMinimumSize() {
+        return new Dimension(200, 780);
+    }
+
 }
