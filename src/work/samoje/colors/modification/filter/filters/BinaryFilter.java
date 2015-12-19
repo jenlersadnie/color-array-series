@@ -2,6 +2,8 @@ package work.samoje.colors.modification.filter.filters;
 
 import java.awt.Color;
 
+import work.samoje.colors.ColorHelpers;
+
 /**
  * {@link IntensityFilter} which, at full intensity, produces a binary version
  * of the image. Does this by averaging all RGB values at a given point and

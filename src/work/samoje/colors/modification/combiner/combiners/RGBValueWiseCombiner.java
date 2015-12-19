@@ -11,26 +11,11 @@ import java.awt.Color;
  *
  */
 public abstract class RGBValueWiseCombiner implements ColorCombiner {
-    protected static final double MAX_COLOR_VAL = 255.0;
-
     @Override
     public Color combine(final Color parentLeft, final Color parentRight) {
         return new Color(combine(parentLeft.getRed(), parentRight.getRed()),
                 combine(parentLeft.getGreen(), parentRight.getGreen()),
                 combine(parentLeft.getBlue(), parentRight.getBlue()));
-    }
-
-    /**
-     * Helper method. Returns the integer value nearest the given double value
-     * that is in the range [0, 255].
-     *
-     * @param value
-     *            Any double value
-     * @return The integer value nearest to the provided in [0, 255]. May be
-     *         equal to the given value.
-     */
-    protected int boundByColorRange(final double value) {
-        return Math.max(0, (int) Math.min(MAX_COLOR_VAL, value));
     }
 
     /**

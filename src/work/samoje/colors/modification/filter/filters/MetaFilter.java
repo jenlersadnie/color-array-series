@@ -4,6 +4,12 @@ import java.awt.Color;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * The one filter to rule them all. Filters by randomly choosing a
+ * {@link Filter} from the specified list.
+ *
+ * @author Jennie Sadler
+ */
 public class MetaFilter implements Filter {
     private final List<Filter> filters;
     final Random rand = new Random();

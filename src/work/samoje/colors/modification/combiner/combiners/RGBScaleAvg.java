@@ -1,5 +1,7 @@
 package work.samoje.colors.modification.combiner.combiners;
 
+import work.samoje.colors.ColorHelpers;
+
 /**
  * Combines colors by taking the RGB value-wise average, and scaling the value
  * by the configured multiplier.
@@ -19,6 +21,7 @@ public class RGBScaleAvg extends RGBValueWiseCombiner {
 
     @Override
     protected int combine(final int left, final int right) {
-        return boundByColorRange(Math.floor((left + right) * colorValueMuliplier));
+        return ColorHelpers.boundByColorRange(Math.floor((left + right)
+                * colorValueMuliplier));
     }
 }

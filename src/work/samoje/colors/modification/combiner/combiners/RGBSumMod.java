@@ -1,5 +1,7 @@
 package work.samoje.colors.modification.combiner.combiners;
 
+import work.samoje.colors.ColorHelpers;
+
 /**
  * Combines colors by taking the modulus of the sum of each respective RGB
  * value. Modulo is determined by the multiplier.
@@ -12,7 +14,7 @@ public class RGBSumMod extends RGBValueWiseCombiner {
 
     public RGBSumMod(final double modifier, final double modifierScale) {
         this.modulus = Math.max(1,
-                (int) ((modifier * MAX_COLOR_VAL) / modifierScale));
+                (int) (modifier * ColorHelpers.MAX_COLOR_VAL / modifierScale));
     }
 
     @Override
