@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import work.samoje.colors.ColorModifierSelector;
+import work.samoje.colors.modification.ColorModifierSelector;
 import work.samoje.colors.modification.filter.filters.Absolute;
 import work.samoje.colors.modification.filter.filters.AbsoluteRGB;
 import work.samoje.colors.modification.filter.filters.Filter;

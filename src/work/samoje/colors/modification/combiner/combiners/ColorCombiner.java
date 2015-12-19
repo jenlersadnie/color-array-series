@@ -2,7 +2,7 @@ package work.samoje.colors.modification.combiner.combiners;
 
 import java.awt.Color;
 
-import work.samoje.colors.ColorModifier;
+import work.samoje.colors.modification.ColorModifier;
 
 /**
  * Combines colors into one.

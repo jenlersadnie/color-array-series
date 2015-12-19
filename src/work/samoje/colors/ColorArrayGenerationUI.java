@@ -22,6 +22,7 @@ import work.samoje.colors.modification.filter.selection.FilterSelector;
 public class ColorArrayGenerationUI {
     private static final int W = 780;
     private static final int H = 780;
+    private static final int BOX_SIZE = 10;
 
     public static void main(final String[] args) {
         final ColorArrayGenerationUI GUI = new ColorArrayGenerationUI();
@@ -65,8 +66,8 @@ public class ColorArrayGenerationUI {
         final FilterSelector filterBus = new FilterSelector();
 
         final ColorSelectorPanel colorPanel = new ColorSelectorPanel();
-        final Canvas canvas = new Canvas(new ColorGrid(W, H, colorCombinerBus),
-                filterBus, executor);
+        final Canvas canvas = new Canvas(new ColorGrid(W/BOX_SIZE, H/BOX_SIZE, colorCombinerBus),
+                filterBus, executor, BOX_SIZE);
         final ActionPanel actionPanel = new ActionPanel(canvas, colorPanel,
                 colorCombinerBus, filterBus);
 

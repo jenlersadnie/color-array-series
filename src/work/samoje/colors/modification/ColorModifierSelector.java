@@ -1,4 +1,4 @@
-package work.samoje.colors;
+package work.samoje.colors.modification;
 
 import java.util.EnumSet;
 import java.util.Observable;
@@ -14,8 +14,7 @@ import java.util.Set;
  * @param <E>
  *            Enum type, specifies Color Modifier options
  */
-public abstract class ColorModifierSelector<E extends Enum<E>> extends
-Observable {
+public abstract class ColorModifierSelector<E extends Enum<E>> extends Observable {
     protected static final int DEFAULT_MAX_MULTIPLIER = 100;
 
     /**

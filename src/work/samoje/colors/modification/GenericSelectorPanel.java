@@ -1,4 +1,4 @@
-package work.samoje.colors;
+package work.samoje.colors.modification;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -18,6 +18,14 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+/**
+ * A generic {@link JPanel}, the UI to the {@link ColorModifierSelector}.
+ *
+ * @author Jennie Sadler
+ *
+ * @param <E>
+ *            Enum type, specifies Color Modifier options
+ */
 public class GenericSelectorPanel<E extends Enum<E>> extends JPanel {
     private static final long serialVersionUID = 1L;
     private static final int INITIAL_VALUE = 10;
@@ -27,6 +35,14 @@ public class GenericSelectorPanel<E extends Enum<E>> extends JPanel {
     private final JLabel valueLabel;
     private final ColorModifierSelector<E> modifierSelector;
 
+    /**
+     * Default constructor. Instantiates a value selector for the color modifier
+     * multiplier, as well as check boxes for all of the options available to
+     * select in the {@link ColorModifierSelector}.
+     *
+     * @param modifierSelector
+     *            The {@link ColorModifierSelector} managed in this UI.
+     */
     public GenericSelectorPanel(final ColorModifierSelector<E> modifierSelector) {
         this.modifierSelector = modifierSelector;
 
@@ -41,13 +57,13 @@ public class GenericSelectorPanel<E extends Enum<E>> extends JPanel {
         this.valueSelector.addChangeListener(new RevisedMethodListener());
         this.add(valueSelector);
 
-        this.valueLabel = new JLabel(multiplierString());
+        this.valueLabel = new JLabel(multiplierLabelString());
         this.add(valueLabel);
 
         modifierCheckboxes = new ArrayList<JCheckBox>();
         for (final E method : modifierSelector.getAllOptions()) {
-            final JCheckBox box = new JCheckBox(method.name(),
-                    modifierSelector.getSelected().contains(method));
+            final JCheckBox box = new JCheckBox(method.name(), modifierSelector
+                    .getSelected().contains(method));
             modifierCheckboxes.add(box);
             box.addActionListener(new RevisedMethodListener());
             this.add(box);
@@ -56,7 +72,7 @@ public class GenericSelectorPanel<E extends Enum<E>> extends JPanel {
         validate();
     }
 
-    private String multiplierString() {
+    private String multiplierLabelString() {
         return String.format("Multiplier: %s", valueSelector.getValue());
     }
 
@@ -82,17 +98,16 @@ public class GenericSelectorPanel<E extends Enum<E>> extends JPanel {
         }
     }
 
-    public class RevisedMethodListener implements ActionListener,
-    ChangeListener {
+    public class RevisedMethodListener implements ActionListener, ChangeListener {
         @Override
         public void actionPerformed(final ActionEvent e) {
-            valueLabel.setText(multiplierString());
+            valueLabel.setText(multiplierLabelString());
             modifierSelector.update(selectedValues(), valueSelector.getValue());
         }
 
         @Override
         public void stateChanged(final ChangeEvent e) {
-            valueLabel.setText(multiplierString());
+            valueLabel.setText(multiplierLabelString());
             modifierSelector.update(selectedValues(), valueSelector.getValue());
         }
     }

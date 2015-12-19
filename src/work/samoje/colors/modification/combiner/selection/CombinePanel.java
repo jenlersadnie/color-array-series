@@ -1,7 +1,7 @@
 package work.samoje.colors.modification.combiner.selection;
 
-import work.samoje.colors.ColorModifierSelector;
-import work.samoje.colors.GenericSelectorPanel;
+import work.samoje.colors.modification.ColorModifierSelector;
+import work.samoje.colors.modification.GenericSelectorPanel;
 
 /**
  * {@link GenericSelectorPanel} for mixing {@link CombineMethod}s in the

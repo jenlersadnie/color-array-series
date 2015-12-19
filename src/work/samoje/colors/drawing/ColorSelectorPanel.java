@@ -12,7 +12,19 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class ColorSelectorPanel extends JPanel implements ColorOverrideProvider {
+/**
+ * {@link JPanel} which allows the GUI user to select an arbitrary color from
+ * the HTTP color code.
+ *
+ * @author Jennie Sadler
+ *
+ */
+/*
+ * TODO this panel is very primitive and could use an upgrade. Investigate if
+ * the JColorChooser class is a more suitable replacement for the home-brewed,
+ * pick-your-own color code, minimally-validated solution in place now.
+ */
+public class ColorSelectorPanel extends JPanel implements ColorProvider {
     private static final long serialVersionUID = 1L;
 
     private Color activeColor;
@@ -21,6 +33,8 @@ public class ColorSelectorPanel extends JPanel implements ColorOverrideProvider 
     private final JComponent colorView;
 
     public ColorSelectorPanel() {
+        this.setPreferredSize(new Dimension(160, 120));
+
         this.activeColor = Color.RED;
         this.colorInput = new JTextField("FFFFFF", 4);
         this.add(colorInput);
@@ -31,11 +45,11 @@ public class ColorSelectorPanel extends JPanel implements ColorOverrideProvider 
         this.colorView = new ColorView();
         this.add(colorView);
 
-        final JButton submitButton = new JButton("Save");
+        final JButton submitButton = new JButton("Update");
         submitButton.addActionListener(new UpdateListener());
         this.add(submitButton);
 
-        syncValues();
+        getColorAndUpdate();
         validate();
     }
 
@@ -44,7 +58,7 @@ public class ColorSelectorPanel extends JPanel implements ColorOverrideProvider 
         return activeColor;
     }
 
-    private void syncValues() {
+    private void getColorAndUpdate() {
         final String text = colorInput.getText();
         activeColor = new Color(Integer.parseInt(text, 16));
         colorLabel.setText(text);
@@ -54,32 +68,21 @@ public class ColorSelectorPanel extends JPanel implements ColorOverrideProvider 
     private class UpdateListener implements ActionListener {
         @Override
         public void actionPerformed(final ActionEvent e) {
-            syncValues();
+            getColorAndUpdate();
         }
     }
 
     public class ColorView extends JComponent {
         private static final long serialVersionUID = 1L;
 
+        public ColorView() {
+            this.setPreferredSize(new Dimension(20, 20));
+        }
+
         @Override
         public void paintComponent(final Graphics g) {
             g.setColor(activeColor);
             g.fillRect(0, 0, 20, 20);
         }
-
-        @Override
-        public Dimension getMinimumSize() {
-            return new Dimension(20, 20);
-        }
-
-        @Override
-        public Dimension getPreferredSize() {
-            return new Dimension(20, 20);
-        }
-    }
-
-    @Override
-    public Dimension getPreferredSize() {
-        return new Dimension(160, 120);
     }
 }

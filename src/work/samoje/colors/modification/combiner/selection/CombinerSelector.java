@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import work.samoje.colors.ColorModifierSelector;
+import work.samoje.colors.modification.ColorModifierSelector;
 import work.samoje.colors.modification.combiner.combiners.ColorCombiner;
 import work.samoje.colors.modification.combiner.combiners.MetaCombiner;
 import work.samoje.colors.modification.combiner.combiners.RGBAvg;
