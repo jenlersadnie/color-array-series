@@ -12,8 +12,8 @@ import java.util.concurrent.ExecutorService;
 
 import javax.swing.JComponent;
 
-import work.samoje.colors.filter.filters.Filter;
-import work.samoje.colors.filter.selection.FilterBus;
+import work.samoje.colors.modification.filter.filters.Filter;
+import work.samoje.colors.modification.filter.selection.FilterSelector;
 import work.samoje.colors.persistence.ImageSaver;
 import work.samoje.colors.persistence.StateSaver;
 
@@ -22,11 +22,11 @@ public class Canvas extends JComponent implements Observer {
     private static final int BOX_WIDTH = 1;
 
     private final ColorGrid grid;
-    private final FilterBus filterProvider;
+    private final FilterSelector filterProvider;
     private final ImageSaver imageSaver;
     private final StateSaver stateSaver;
 
-    public Canvas(final ColorGrid grid, final FilterBus filterProvider, final ExecutorService executor) {
+    public Canvas(final ColorGrid grid, final FilterSelector filterProvider, final ExecutorService executor) {
         this.grid = grid;
         this.filterProvider = filterProvider;
         this.imageSaver = new ImageSaver(executor);

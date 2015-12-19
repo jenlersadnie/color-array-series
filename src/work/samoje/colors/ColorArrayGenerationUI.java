@@ -8,11 +8,11 @@ import java.util.concurrent.Executors;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
-import work.samoje.colors.combiner.selection.ColorCombinerBus;
 import work.samoje.colors.drawing.ColorSelectorPanel;
-import work.samoje.colors.filter.selection.FilterBus;
 import work.samoje.colors.grid.Canvas;
 import work.samoje.colors.grid.ColorGrid;
+import work.samoje.colors.modification.combiner.selection.CombinerSelector;
+import work.samoje.colors.modification.filter.selection.FilterSelector;
 
 /**
  * Main UI class for running the Color Array Generation Application.
@@ -61,8 +61,8 @@ public class ColorArrayGenerationUI {
         final Container pane = frame.getContentPane();
         pane.setLayout(new FlowLayout(FlowLayout.LEFT, 4, 4));
 
-        final ColorCombinerBus colorCombinerBus = new ColorCombinerBus();
-        final FilterBus filterBus = new FilterBus();
+        final CombinerSelector colorCombinerBus = new CombinerSelector();
+        final FilterSelector filterBus = new FilterSelector();
 
         final ColorSelectorPanel colorPanel = new ColorSelectorPanel();
         final Canvas canvas = new Canvas(new ColorGrid(W, H, colorCombinerBus),

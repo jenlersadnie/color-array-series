@@ -7,15 +7,15 @@ import java.util.Observer;
 import java.util.Optional;
 import java.util.Set;
 
-import work.samoje.colors.combiner.combiners.ColorCombiner;
-import work.samoje.colors.combiner.selection.ColorCombinerBus;
-import work.samoje.colors.combiner.selection.CombinerProvider;
+import work.samoje.colors.modification.combiner.combiners.ColorCombiner;
+import work.samoje.colors.modification.combiner.selection.CombinerProvider;
+import work.samoje.colors.modification.combiner.selection.CombinerSelector;
 
 /**
  * Represents a 2D color grid.
  */
 public class ColorGrid extends Observable implements Observer {
-    private final ColorCombinerBus combinerProvider;
+    private final CombinerSelector combinerProvider;
     private final Color[][] grid;
     private final int height;
     private final int width;
@@ -33,7 +33,7 @@ public class ColorGrid extends Observable implements Observer {
      *      grid contents.
      */
     public ColorGrid(final int height, final int width,
-            final ColorCombinerBus combinerProvider) {
+            final CombinerSelector combinerProvider) {
         this.height = height;
         this.width = width;
         this.grid = new Color[height][width];

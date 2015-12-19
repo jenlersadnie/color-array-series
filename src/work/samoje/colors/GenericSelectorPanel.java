@@ -23,32 +23,32 @@ public class GenericSelectorPanel<E extends Enum<E>> extends JPanel {
     private static final int INITIAL_VALUE = 10;
 
     private final JSlider valueSelector;
-    final List<JCheckBox> selectors;
+    final List<JCheckBox> modifierCheckboxes;
     private final JLabel valueLabel;
-    private final GenericSelectorBus<E> selectorBus;
+    private final ColorModifierSelector<E> modifierSelector;
 
-    public GenericSelectorPanel(final GenericSelectorBus<E> selectorBus) {
-        this.selectorBus = selectorBus;
+    public GenericSelectorPanel(final ColorModifierSelector<E> modifierSelector) {
+        this.modifierSelector = modifierSelector;
 
-        final int numRows = 2 + selectorBus.getAllOptions().size();
-        this.setPreferredSize(new Dimension(160, numRows*20));
+        final int numRows = 2 + modifierSelector.getAllOptions().size();
+        this.setPreferredSize(new Dimension(160, numRows * 20));
         this.setLayout(new GridLayout(numRows, 1));
 
-        this.valueSelector = new JSlider(0, getMaxMultiplier());
+        this.valueSelector = new JSlider(0, modifierSelector.getMaxMultiplier());
         this.valueSelector.setOrientation(SwingConstants.HORIZONTAL);
         this.valueSelector.setValue(INITIAL_VALUE);
         this.valueSelector.setPreferredSize(new Dimension(130, 30));
         this.valueSelector.addChangeListener(new RevisedMethodListener());
         this.add(valueSelector);
 
-        this.valueLabel = new JLabel(Integer.toString(INITIAL_VALUE));
+        this.valueLabel = new JLabel(multiplierString());
         this.add(valueLabel);
 
-        selectors = new ArrayList<JCheckBox>();
-        for (final E method : selectorBus.getAllOptions()) {
-            final JCheckBox box = new JCheckBox(method.name(), selectorBus
-                    .getSelected().contains(method));
-            selectors.add(box);
+        modifierCheckboxes = new ArrayList<JCheckBox>();
+        for (final E method : modifierSelector.getAllOptions()) {
+            final JCheckBox box = new JCheckBox(method.name(),
+                    modifierSelector.getSelected().contains(method));
+            modifierCheckboxes.add(box);
             box.addActionListener(new RevisedMethodListener());
             this.add(box);
         }
@@ -56,39 +56,44 @@ public class GenericSelectorPanel<E extends Enum<E>> extends JPanel {
         validate();
     }
 
+    private String multiplierString() {
+        return String.format("Multiplier: %s", valueSelector.getValue());
+    }
+
     public void setMultiplier(final int value) {
         this.valueSelector.setValue(value);
     }
 
     public int getMaxMultiplier() {
-        return selectorBus.getMaxMultiplier();
+        return modifierSelector.getMaxMultiplier();
     }
 
     private EnumSet<E> selectedValues() {
         final Set<String> selections = new HashSet<String>();
-        for (final JCheckBox checker : selectors) {
+        for (final JCheckBox checker : modifierCheckboxes) {
             if (checker.isSelected()) {
                 selections.add(checker.getText());
             }
         }
         if (selections.isEmpty()) {
-            return selectorBus.getAllOptions();
+            return modifierSelector.getAllOptions();
         } else {
-            return selectorBus.getEnumSetFor(selections);
+            return modifierSelector.getEnumSetFor(selections);
         }
     }
 
-    public class RevisedMethodListener implements ActionListener, ChangeListener {
+    public class RevisedMethodListener implements ActionListener,
+    ChangeListener {
         @Override
         public void actionPerformed(final ActionEvent e) {
-            valueLabel.setText(Integer.toString(valueSelector.getValue()));
-            selectorBus.update(selectedValues(), valueSelector.getValue());
+            valueLabel.setText(multiplierString());
+            modifierSelector.update(selectedValues(), valueSelector.getValue());
         }
 
         @Override
         public void stateChanged(final ChangeEvent e) {
-            valueLabel.setText(Integer.toString(valueSelector.getValue()));
-            selectorBus.update(selectedValues(), valueSelector.getValue());
+            valueLabel.setText(multiplierString());
+            modifierSelector.update(selectedValues(), valueSelector.getValue());
         }
     }
 }

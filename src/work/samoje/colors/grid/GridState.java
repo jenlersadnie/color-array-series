@@ -1,6 +1,6 @@
 package work.samoje.colors.grid;
 
-import work.samoje.colors.combiner.selection.CombinerState;
+import work.samoje.colors.modification.combiner.selection.CombinerState;
 
 public class GridState {
     private final CombinerState combinerState;

@@ -1,6 +1,6 @@
 package work.samoje.colors.grid;
 
-import work.samoje.colors.filter.selection.FilterState;
+import work.samoje.colors.modification.filter.selection.FilterState;
 
 public class CanvasState {
     private final GridState gridState;

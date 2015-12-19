@@ -1,4 +1,4 @@
-package work.samoje.colors.combiner.combiners;
+package work.samoje.colors.modification.combiner.combiners;
 
 import java.util.Random;
 

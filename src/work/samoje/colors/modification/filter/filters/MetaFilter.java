@@ -1,4 +1,4 @@
-package work.samoje.colors.filter.filters;
+package work.samoje.colors.modification.filter.filters;
 
 import java.awt.Color;
 import java.util.List;

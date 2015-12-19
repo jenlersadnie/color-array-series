@@ -1,4 +1,4 @@
-package work.samoje.colors.combiner.selection;
+package work.samoje.colors.modification.combiner.selection;
 
 import java.util.EnumSet;
 

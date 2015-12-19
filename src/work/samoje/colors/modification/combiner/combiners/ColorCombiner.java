@@ -1,6 +1,8 @@
-package work.samoje.colors.combiner.combiners;
+package work.samoje.colors.modification.combiner.combiners;
 
 import java.awt.Color;
+
+import work.samoje.colors.ColorModifier;
 
 /**
  * Combines colors into one.
@@ -11,7 +13,7 @@ import java.awt.Color;
  * TODO: Introduce combine(Color firstParent, Color... parents) method to
  * support combinations of arbitrary amounts of colors.
  */
-public interface ColorCombiner {
+public interface ColorCombiner extends ColorModifier {
 
     /**
      * Given the two {@link Color}s, returns the one {@link Color}.

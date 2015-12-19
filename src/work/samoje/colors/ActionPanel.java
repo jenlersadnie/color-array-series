@@ -11,12 +11,12 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-import work.samoje.colors.combiner.selection.ColorCombinerBus;
-import work.samoje.colors.combiner.selection.CombinePanel;
 import work.samoje.colors.drawing.ColorSelectorPanel;
-import work.samoje.colors.filter.selection.FilterBus;
-import work.samoje.colors.filter.selection.FilterPanel;
 import work.samoje.colors.grid.Canvas;
+import work.samoje.colors.modification.combiner.selection.CombinePanel;
+import work.samoje.colors.modification.combiner.selection.CombinerSelector;
+import work.samoje.colors.modification.filter.selection.FilterPanel;
+import work.samoje.colors.modification.filter.selection.FilterSelector;
 
 /**
  * JPanel which contains all {@link JComponent}s that allow actions on the
@@ -50,15 +50,15 @@ public class ActionPanel extends JPanel {
      *            that will be used when overriding edge values on the
      *            {@link Canvas}.
      * @param combinerBus
-     *            The {@link ColorCombinerBus}, used to create a
+     *            The {@link CombinerSelector}, used to create a
      *            {@link CombinePanel} instance
      * @param filterBus
-     *            The {@link FilterBus}, used to create a
+     *            The {@link FilterSelector}, used to create a
      *            {@link FilterPanel} instance
      */
     public ActionPanel(final Canvas canvas,
             final ColorSelectorPanel colorSelectorPanel,
-            final ColorCombinerBus combinerBus, final FilterBus filterBus) {
+            final CombinerSelector combinerBus, final FilterSelector filterBus) {
         this.canvas = canvas;
         this.combinePanel = new CombinePanel(combinerBus);
 

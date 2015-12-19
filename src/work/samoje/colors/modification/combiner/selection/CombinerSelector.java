@@ -1,4 +1,4 @@
-package work.samoje.colors.combiner.selection;
+package work.samoje.colors.modification.combiner.selection;
 
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -7,21 +7,21 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import work.samoje.colors.GenericSelectorBus;
-import work.samoje.colors.combiner.combiners.ColorCombiner;
-import work.samoje.colors.combiner.combiners.MetaCombiner;
-import work.samoje.colors.combiner.combiners.RGBAvg;
-import work.samoje.colors.combiner.combiners.RGBChooser;
-import work.samoje.colors.combiner.combiners.RGBNoisyAvg;
-import work.samoje.colors.combiner.combiners.RGBScaleAvg;
-import work.samoje.colors.combiner.combiners.RGBSumMod;
+import work.samoje.colors.ColorModifierSelector;
+import work.samoje.colors.modification.combiner.combiners.ColorCombiner;
+import work.samoje.colors.modification.combiner.combiners.MetaCombiner;
+import work.samoje.colors.modification.combiner.combiners.RGBAvg;
+import work.samoje.colors.modification.combiner.combiners.RGBChooser;
+import work.samoje.colors.modification.combiner.combiners.RGBNoisyAvg;
+import work.samoje.colors.modification.combiner.combiners.RGBScaleAvg;
+import work.samoje.colors.modification.combiner.combiners.RGBSumMod;
 
-public class ColorCombinerBus extends GenericSelectorBus<CombineMethod> implements CombinerProvider {
+public class CombinerSelector extends ColorModifierSelector<CombineMethod> implements CombinerProvider {
     protected static final int MAX_MULTIPLIER = 100;
     private EnumSet<CombineMethod> combineMethods;
     private int multiplier;
 
-    public ColorCombinerBus() {
+    public CombinerSelector() {
         combineMethods = EnumSet.of(CombineMethod.RGB_AVG);
         multiplier = 0;
     }
@@ -63,7 +63,7 @@ public class ColorCombinerBus extends GenericSelectorBus<CombineMethod> implemen
 
     @Override
     public EnumSet<CombineMethod> getSelected() {
-        return combineMethods;
+        return EnumSet.copyOf(combineMethods);
     }
 
     public Map<CombineMethod, ColorCombiner> combiners(final int value) {

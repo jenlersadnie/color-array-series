@@ -1,6 +1,6 @@
-package work.samoje.colors.filter.selection;
+package work.samoje.colors.modification.filter.selection;
 
-import work.samoje.colors.filter.filters.Filter;
+import work.samoje.colors.modification.filter.filters.Filter;
 
 public interface FilterProvider {
     public Filter getFilter();

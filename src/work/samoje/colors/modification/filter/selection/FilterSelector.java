@@ -1,4 +1,4 @@
-package work.samoje.colors.filter.selection;
+package work.samoje.colors.modification.filter.selection;
 
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -7,20 +7,20 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import work.samoje.colors.GenericSelectorBus;
-import work.samoje.colors.filter.filters.Absolute;
-import work.samoje.colors.filter.filters.AbsoluteRGB;
-import work.samoje.colors.filter.filters.Filter;
-import work.samoje.colors.filter.filters.MetaFilter;
-import work.samoje.colors.filter.filters.NoFilter;
+import work.samoje.colors.ColorModifierSelector;
+import work.samoje.colors.modification.filter.filters.Absolute;
+import work.samoje.colors.modification.filter.filters.AbsoluteRGB;
+import work.samoje.colors.modification.filter.filters.Filter;
+import work.samoje.colors.modification.filter.filters.MetaFilter;
+import work.samoje.colors.modification.filter.filters.NoFilter;
 
-public class FilterBus extends GenericSelectorBus<FilterMethod> implements FilterProvider {
+public class FilterSelector extends ColorModifierSelector<FilterMethod> implements FilterProvider {
     protected static final int MAX_MULTIPLIER = 100;
 
     private EnumSet<FilterMethod> filters;
     private int multiplier;
 
-    public FilterBus() {
+    public FilterSelector() {
         this.filters = EnumSet.of(FilterMethod.NONE);
         this.multiplier = 0;
     }
@@ -37,7 +37,7 @@ public class FilterBus extends GenericSelectorBus<FilterMethod> implements Filte
 
     @Override
     public EnumSet<FilterMethod> getSelected() {
-        return filters;
+        return EnumSet.copyOf(filters);
     }
 
     @Override

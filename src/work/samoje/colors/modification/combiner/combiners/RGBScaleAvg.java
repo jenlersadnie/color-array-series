@@ -1,4 +1,4 @@
-package work.samoje.colors.combiner.combiners;
+package work.samoje.colors.modification.combiner.combiners;
 
 /**
  * Combines colors by taking the RGB value-wise average, and scaling the value

@@ -16,8 +16,8 @@ import java.util.concurrent.Future;
 
 import javax.imageio.ImageIO;
 
-import work.samoje.colors.filter.filters.Filter;
 import work.samoje.colors.grid.ColorGrid;
+import work.samoje.colors.modification.filter.filters.Filter;
 
 /**
  * Responsible for exporting {@link ColorGrid} instances to image files, and

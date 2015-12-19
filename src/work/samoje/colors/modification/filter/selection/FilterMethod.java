@@ -1,4 +1,4 @@
-package work.samoje.colors.filter.selection;
+package work.samoje.colors.modification.filter.selection;
 
 public enum FilterMethod {
     NONE, ABSOLUTE, ABSOLUTE_RGB;
