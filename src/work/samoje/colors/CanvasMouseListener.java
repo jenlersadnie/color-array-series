@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.swing.event.MouseInputAdapter;
 
 import work.samoje.colors.drawing.ColorOverrideProvider;
+import work.samoje.colors.grid.Canvas;
 
 public class CanvasMouseListener extends MouseInputAdapter {
     private Point startPoint = new Point(0, 0);

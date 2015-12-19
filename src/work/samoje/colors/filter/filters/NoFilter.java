@@ -8,5 +8,4 @@ public class NoFilter implements Filter {
     public Color filter(final Color a) {
         return a;
     }
-
 }

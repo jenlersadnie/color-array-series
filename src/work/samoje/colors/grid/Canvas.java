@@ -1,20 +1,21 @@
-package work.samoje.colors;
+package work.samoje.colors.grid;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
 
 import javax.swing.JComponent;
 
 import work.samoje.colors.filter.filters.Filter;
 import work.samoje.colors.filter.selection.FilterBus;
 import work.samoje.colors.persistence.ImageSaver;
+import work.samoje.colors.persistence.StateSaver;
 
 public class Canvas extends JComponent implements Observer {
     private static final long serialVersionUID = 1L;
@@ -22,10 +23,14 @@ public class Canvas extends JComponent implements Observer {
 
     private final ColorGrid grid;
     private final FilterBus filterProvider;
+    private final ImageSaver imageSaver;
+    private final StateSaver stateSaver;
 
-    public Canvas(final ColorGrid grid, final FilterBus filterProvider) {
+    public Canvas(final ColorGrid grid, final FilterBus filterProvider, final ExecutorService executor) {
         this.grid = grid;
         this.filterProvider = filterProvider;
+        this.imageSaver = new ImageSaver(executor);
+        this.stateSaver = new StateSaver();
         initialize();
 
         this.grid.addObserver(this);
@@ -43,7 +48,7 @@ public class Canvas extends JComponent implements Observer {
     }
 
     public void writeColorToPoints(final Set<Point> points, final Color color) {
-        grid.writeColorToPoints(points, color);
+        grid.writeToNearestEdge(points, color);
         repaint();
     }
 
@@ -57,9 +62,9 @@ public class Canvas extends JComponent implements Observer {
 
     private void fillGrid(final Graphics g) {
         final Filter filter = filterProvider.getFilter();
-        for (int w = 0; w < grid.getWidth(); w++) {
-            for (int h = 0; h < grid.getHeight(); h++) {
-                final Optional<Color> maybeColor = grid.getColorForPoint(w, h);
+        for (int w = 0; w < grid.getHeight(); w++) {
+            for (int h = 0; h < grid.getWidth(); h++) {
+                final Optional<Color> maybeColor = grid.getColorForPoint(h, w);
                 if (maybeColor.isPresent()) {
                     g.setColor(filter.filter(maybeColor.get()));
                     g.fillRect(positionOf(h), positionOf(w), BOX_WIDTH,
@@ -70,13 +75,15 @@ public class Canvas extends JComponent implements Observer {
     }
 
     public void saveCapture(final String fileName) {
-        ImageSaver.saveImageForGrid(grid.getRawGrid(),
-                filterProvider.getFilter(),
-                new File(fileName));
+        imageSaver.saveImageForGrid(grid, filterProvider.getFilter(), fileName);
     }
 
-    public CanvasState getCanvasState() {
+    private CanvasState getCanvasState() {
         return new CanvasState(grid.getGridState(), filterProvider.getFilterState());
+    }
+
+    public void saveState(final String fileName) {
+        stateSaver.saveState(getCanvasState(), fileName);
     }
 
     @Override
@@ -97,8 +104,8 @@ public class Canvas extends JComponent implements Observer {
      */
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension((grid.getHeight() * BOX_WIDTH) + 2,
-                (grid.getWidth() * BOX_WIDTH) + 2);
+        return new Dimension((grid.getWidth() * BOX_WIDTH) + 2,
+                (grid.getHeight() * BOX_WIDTH) + 2);
     }
 
     @Override

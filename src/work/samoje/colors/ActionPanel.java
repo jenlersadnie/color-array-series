@@ -9,81 +9,134 @@ import java.io.File;
 import java.util.UUID;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import work.samoje.colors.combiner.selection.ColorCombinerBus;
 import work.samoje.colors.combiner.selection.CombinePanel;
-import work.samoje.colors.drawing.ColorPanel;
+import work.samoje.colors.drawing.ColorSelectorPanel;
 import work.samoje.colors.filter.selection.FilterBus;
 import work.samoje.colors.filter.selection.FilterPanel;
-import work.samoje.colors.persistence.StateSaver;
+import work.samoje.colors.grid.Canvas;
 
-
+/**
+ * JPanel which contains all {@link JComponent}s that allow actions on the
+ * {@link Canvas}. Currently also responsible for orchestrating some actions on
+ * the {@link Canvas}.
+ *
+ * @author Jennie Sadler
+ */
+/*
+ * TODO: Migrate Initialize and Save Capture/Clips functionality to existing
+ * Observer pattern, to remove orchestration responsibility/action listeners
+ * from this JPanel.
+ *
+ * This change will require more complex update logic in Canvas and ColorGrid.
+ * See ColorCombinerBus, FilterBus for examples of Observables registered with
+ * the Canvas.
+ */
 public class ActionPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private final Canvas canvas;
     private final CombinePanel combinePanel;
 
-    public ActionPanel(final Canvas canvas, final ColorPanel colorPanel,
-            final ColorCombinerBus combinerProvider, final FilterBus filterBus) {
+    /**
+     * Default constructor. Instantiates {@link JComponent}s and wires up
+     * listeners.
+     *
+     * @param canvas
+     *            The {@link Canvas}
+     * @param colorSelectorPanel
+     *            The {@link ColorSelectorPanel}, used for choosing the color
+     *            that will be used when overriding edge values on the
+     *            {@link Canvas}.
+     * @param combinerBus
+     *            The {@link ColorCombinerBus}, used to create a
+     *            {@link CombinePanel} instance
+     * @param filterBus
+     *            The {@link FilterBus}, used to create a
+     *            {@link FilterPanel} instance
+     */
+    public ActionPanel(final Canvas canvas,
+            final ColorSelectorPanel colorSelectorPanel,
+            final ColorCombinerBus combinerBus, final FilterBus filterBus) {
         this.canvas = canvas;
-        this.combinePanel = new CombinePanel(combinerProvider);
+        this.combinePanel = new CombinePanel(combinerBus);
 
-        this.add(colorPanel);
+        this.add(colorSelectorPanel);
         this.add(combinePanel);
         this.add(new FilterPanel(filterBus));
 
-        final JButton reinit = new JButton("Initialize");
-        reinit.addActionListener(new InitializeButtonListener());
+        final JButton reinit = new JButton("Renitialize");
+        reinit.addActionListener(new ReinitializeButtonListener());
         this.add(reinit);
 
         final JButton screenCap = new JButton("Save Capture");
-        screenCap.addActionListener(new ScreenCapListener());
+        screenCap.addActionListener(new SaveCaptureListener());
         this.add(screenCap);
 
-        final JButton fullScaleCapture = new JButton("Save All Clips");
-        fullScaleCapture.addActionListener(new CombinerClipsListener());
+        final JButton fullScaleCapture = new JButton("Save Clips");
+        fullScaleCapture.addActionListener(new SaveClipsListener());
         this.add(fullScaleCapture);
-
 
         validate();
     }
 
-    public class InitializeButtonListener implements ActionListener {
+    /**
+     * Sends a command to the canvas to re-initialize.
+     */
+    public class ReinitializeButtonListener implements ActionListener {
         @Override
         public void actionPerformed(final ActionEvent e) {
             canvas.initialize();
         }
     }
 
-    public class ScreenCapListener implements ActionListener {
+    /**
+     * Saves the current canvas state and image.
+     *
+     * @author Jennie Sadler
+     */
+    public class SaveCaptureListener implements ActionListener {
         @Override
         public void actionPerformed(final ActionEvent e) {
-            final String path = String.format("out/color-array-%s/", UUID.randomUUID());
-            final File filePath = new File(path);
-            filePath.mkdirs();
+            final String path = getDefaultPath();
+            makeDirectories(path);
+            canvas.saveState(path);
 
-            StateSaver.saveStateToPath(canvas.getCanvasState(), filePath);
-
-            final String imagePath = path + "capture.png";
+            final String imagePath = path + "capture";
             canvas.saveCapture(imagePath);
         }
     }
 
-    public class CombinerClipsListener implements ActionListener {
+    /**
+     * Saves the current canvas state, the saves an image for each possible
+     * {@link CombinePanel} multiplier.
+     *
+     * @author Jennie Sadler
+     */
+    public class SaveClipsListener implements ActionListener {
         @Override
         public void actionPerformed(final ActionEvent e) {
-            final String path = String.format("out/color-array-%s/", UUID.randomUUID());
-            final File filePath = new File(path);
-            filePath.mkdirs();
-            StateSaver.saveStateToPath(canvas.getCanvasState(), filePath);
+            final String path = getDefaultPath();
+            makeDirectories(path);
+            canvas.saveState(path);
 
             for (int value = 0; value < combinePanel.getMaxMultiplier(); value++) {
                 combinePanel.setMultiplier(value);
-                final String imagePath = path + "capture-" + value + ".png";
+                final String imagePath = path + "capture-" + value;
                 canvas.saveCapture(imagePath);
             }
         }
+    }
+
+    private String getDefaultPath() {
+        return String.format("out/color-array-%s/", UUID.randomUUID());
+    }
+
+    private void makeDirectories(final String path) {
+        final File filePath = new File(path);
+        filePath.mkdirs();
     }
 
     @Override
@@ -100,5 +153,4 @@ public class ActionPanel extends JPanel {
     public Dimension getMinimumSize() {
         return new Dimension(200, 780);
     }
-
 }

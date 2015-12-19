@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class ColorPanel extends JPanel implements ColorOverrideProvider {
+public class ColorSelectorPanel extends JPanel implements ColorOverrideProvider {
     private static final long serialVersionUID = 1L;
 
     private Color activeColor;
@@ -20,7 +20,7 @@ public class ColorPanel extends JPanel implements ColorOverrideProvider {
     private final JLabel colorLabel;
     private final JComponent colorView;
 
-    public ColorPanel() {
+    public ColorSelectorPanel() {
         this.activeColor = Color.RED;
         this.colorInput = new JTextField("FFFFFF", 4);
         this.add(colorInput);
