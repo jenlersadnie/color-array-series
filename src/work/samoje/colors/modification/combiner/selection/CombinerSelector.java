@@ -16,7 +16,14 @@ import work.samoje.colors.modification.combiner.combiners.RGBNoisyAvg;
 import work.samoje.colors.modification.combiner.combiners.RGBScaleAvg;
 import work.samoje.colors.modification.combiner.combiners.RGBSumMod;
 
-public class CombinerSelector extends ColorModifierSelector<CombineMethod> implements CombinerProvider {
+/**
+ * {@link ColorModifierSelector} for {@link CombineMethod} enum. Provides
+ * {@link ColorCombiner} instances.
+ *
+ * @author Jennie Sadler
+ */
+public class CombinerSelector extends ColorModifierSelector<CombineMethod>
+        implements CombinerProvider {
     protected static final int MAX_MULTIPLIER = 100;
     private EnumSet<CombineMethod> combineMethods;
     private int multiplier;
@@ -33,7 +40,9 @@ public class CombinerSelector extends ColorModifierSelector<CombineMethod> imple
 
     @Override
     public EnumSet<CombineMethod> getEnumSetFor(final Set<String> selections) {
-        return EnumSet.copyOf(selections.stream().map(str -> CombineMethod.valueOf(str)).collect(Collectors.toList()));
+        return EnumSet.copyOf(selections.stream()
+                .map(str -> CombineMethod.valueOf(str))
+                .collect(Collectors.toList()));
     }
 
     @Override

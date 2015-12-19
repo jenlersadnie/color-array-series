@@ -8,13 +8,20 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import work.samoje.colors.modification.ColorModifierSelector;
-import work.samoje.colors.modification.filter.filters.Absolute;
 import work.samoje.colors.modification.filter.filters.AbsoluteRGB;
+import work.samoje.colors.modification.filter.filters.BinaryFilter;
 import work.samoje.colors.modification.filter.filters.Filter;
 import work.samoje.colors.modification.filter.filters.MetaFilter;
 import work.samoje.colors.modification.filter.filters.NoFilter;
 
-public class FilterSelector extends ColorModifierSelector<FilterMethod> implements FilterProvider {
+/**
+ * {@link ColorModifierSelector} for {@link FilterMethod} enum. Provides
+ * {@link Filter} instances.
+ *
+ * @author Jennie Sadler
+ */
+public class FilterSelector extends ColorModifierSelector<FilterMethod>
+        implements FilterProvider {
     protected static final int MAX_MULTIPLIER = 100;
 
     private EnumSet<FilterMethod> filters;
@@ -32,7 +39,9 @@ public class FilterSelector extends ColorModifierSelector<FilterMethod> implemen
 
     @Override
     public EnumSet<FilterMethod> getEnumSetFor(final Set<String> selections) {
-        return EnumSet.copyOf(selections.stream().map(str -> FilterMethod.valueOf(str)).collect(Collectors.toList()));
+        return EnumSet.copyOf(selections.stream()
+                .map(str -> FilterMethod.valueOf(str))
+                .collect(Collectors.toList()));
     }
 
     @Override
@@ -60,10 +69,10 @@ public class FilterSelector extends ColorModifierSelector<FilterMethod> implemen
     public Map<FilterMethod, Filter> filters(final int value) {
         final Map<FilterMethod, Filter> filterMap = new HashMap<>();
         filterMap.put(FilterMethod.NONE, new NoFilter());
-        filterMap.put(FilterMethod.ABSOLUTE, new Absolute());
-        filterMap.put(FilterMethod.ABSOLUTE_RGB, new AbsoluteRGB());
-        // filterMap.put(FilterMethod.RGB_SCALE_AVG, new RGBScaleAvg(value,
-        // VALUE_SELECTOR_RANGE));
+        filterMap.put(FilterMethod.BINARY, new BinaryFilter(multiplier,
+                getMaxMultiplier()));
+        filterMap.put(FilterMethod.ABSOLUTE_RGB, new AbsoluteRGB(multiplier,
+                getMaxMultiplier()));
         return filterMap;
     }
 

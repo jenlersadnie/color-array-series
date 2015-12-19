@@ -1,14 +1,20 @@
 package work.samoje.colors.modification.filter.filters;
 
-import java.awt.Color;
-
-public class AbsoluteRGB implements Filter {
-    @Override
-    public Color filter(final Color a) {
-        return new Color(abs(a.getRed()), abs(a.getGreen()), abs(a.getBlue()));
+/**
+ * {@link IntensityFilter} which, at full intensity, pushes the RGB values of a
+ * pixel to their nearest absolutes (0 or 255).
+ *
+ * @author Jennie Sadler
+ *
+ */
+public class AbsoluteRGB extends RGBValueWiseFilter {
+    public AbsoluteRGB(final int multiplier, final int maxMultiplier) {
+        super(multiplier, maxMultiplier);
     }
 
-    private int abs(final int a) {
-        return (a > (255 / 2)) ? 255 : 0;
+    @Override
+    protected int filter(final int value) {
+        return applyIntensity(value,
+                ColorHelpers.getNearestAbsoluteValue(value));
     }
 }
