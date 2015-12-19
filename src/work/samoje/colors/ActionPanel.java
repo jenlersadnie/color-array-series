@@ -1,8 +1,7 @@
 package work.samoje.colors;
 
 import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.LayoutManager;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -63,21 +62,28 @@ public class ActionPanel extends JPanel {
         this.canvas = canvas;
         this.combinePanel = new CombinePanel(combinerBus);
 
+        this.setPreferredSize(new Dimension(200, 780));
+        this.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 40));
+
         this.add(colorSelectorPanel);
         this.add(combinePanel);
         this.add(new FilterPanel(filterBus));
 
+        final JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setPreferredSize(new Dimension(200, 150));
+        buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 5));
         final JButton reinit = new JButton("Renitialize");
         reinit.addActionListener(new ReinitializeButtonListener());
-        this.add(reinit);
+        buttonsPanel.add(reinit);
 
         final JButton screenCap = new JButton("Save Capture");
         screenCap.addActionListener(new SaveCaptureListener());
-        this.add(screenCap);
+        buttonsPanel.add(screenCap);
 
         final JButton fullScaleCapture = new JButton("Save Clips");
         fullScaleCapture.addActionListener(new SaveClipsListener());
-        this.add(fullScaleCapture);
+        buttonsPanel.add(fullScaleCapture);
+        this.add(buttonsPanel);
 
         validate();
     }
@@ -137,20 +143,5 @@ public class ActionPanel extends JPanel {
     private void makeDirectories(final String path) {
         final File filePath = new File(path);
         filePath.mkdirs();
-    }
-
-    @Override
-    public LayoutManager getLayout() {
-        return new GridLayout(4, 1);
-    }
-
-    @Override
-    public Dimension getPreferredSize() {
-        return new Dimension(200, 780);
-    }
-
-    @Override
-    public Dimension getMinimumSize() {
-        return new Dimension(200, 780);
     }
 }

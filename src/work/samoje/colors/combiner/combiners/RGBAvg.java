@@ -1,6 +1,11 @@
 package work.samoje.colors.combiner.combiners;
 
-public class RGBAvg extends BinaryValueWiseCombiner {
+/**
+ * Combines colors by taking the RGB value-wise average.
+ *
+ * @author Jennie Sadler
+ */
+public class RGBAvg extends RGBValueWiseCombiner {
     @Override
     public int combine(final int left, final int right) {
         return (int) ((left + right) / 2.0);

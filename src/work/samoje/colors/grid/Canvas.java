@@ -47,7 +47,7 @@ public class Canvas extends JComponent implements Observer {
         return block;
     }
 
-    public void writeColorToPoints(final Set<Point> points, final Color color) {
+    public void writeColorToEdges(final Set<Point> points, final Color color) {
         grid.writeToNearestEdge(points, color);
         repaint();
     }

@@ -1,15 +1,24 @@
 package work.samoje.colors.combiner.combiners;
 
-public class RGBScaleAvg extends BinaryValueWiseCombiner {
-    private final double muliplier;
+/**
+ * Combines colors by taking the RGB value-wise average, and scaling the value
+ * by the configured multiplier.
+ *
+ * @author Jennie Sadler
+ */
+public class RGBScaleAvg extends RGBValueWiseCombiner {
+    private static final double MULTIPLIER_CONSTANT = 0.25;
+    private static final double MULTIPLIER_SCALE = 0.5;
 
-    public RGBScaleAvg(final double modifier, final double modifierScale) {
-        this.muliplier = 0.25 + (modifier * 0.5) / modifierScale;
+    private final double colorValueMuliplier;
+
+    public RGBScaleAvg(final double multiplier, final double multiplierScale) {
+        this.colorValueMuliplier = MULTIPLIER_CONSTANT
+                + (multiplier * MULTIPLIER_SCALE) / multiplierScale;
     }
 
     @Override
     protected int combine(final int left, final int right) {
-        return Math.max(0,
-                Math.min((int) Math.floor((left + right) * muliplier), 255));
+        return boundByColorRange(Math.floor((left + right) * colorValueMuliplier));
     }
 }

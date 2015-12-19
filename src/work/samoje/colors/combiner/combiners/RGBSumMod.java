@@ -1,6 +1,6 @@
 package work.samoje.colors.combiner.combiners;
 
-public class RGBSumMod extends BinaryValueWiseCombiner {
+public class RGBSumMod extends RGBValueWiseCombiner {
     private final int modulus;
 
     public RGBSumMod(final double modifier, final double modifierScale) {

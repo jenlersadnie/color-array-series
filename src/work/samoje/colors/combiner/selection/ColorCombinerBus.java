@@ -4,9 +4,10 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+import work.samoje.colors.GenericSelectorBus;
 import work.samoje.colors.combiner.combiners.ColorCombiner;
 import work.samoje.colors.combiner.combiners.MetaCombiner;
 import work.samoje.colors.combiner.combiners.RGBAvg;
@@ -15,7 +16,7 @@ import work.samoje.colors.combiner.combiners.RGBNoisyAvg;
 import work.samoje.colors.combiner.combiners.RGBScaleAvg;
 import work.samoje.colors.combiner.combiners.RGBSumMod;
 
-public class ColorCombinerBus extends Observable implements CombinerProvider {
+public class ColorCombinerBus extends GenericSelectorBus<CombineMethod> implements CombinerProvider {
     protected static final int MAX_MULTIPLIER = 100;
     private EnumSet<CombineMethod> combineMethods;
     private int multiplier;
@@ -25,6 +26,17 @@ public class ColorCombinerBus extends Observable implements CombinerProvider {
         multiplier = 0;
     }
 
+    @Override
+    public EnumSet<CombineMethod> getAllOptions() {
+        return EnumSet.allOf(CombineMethod.class);
+    }
+
+    @Override
+    public EnumSet<CombineMethod> getEnumSetFor(final Set<String> selections) {
+        return EnumSet.copyOf(selections.stream().map(str -> CombineMethod.valueOf(str)).collect(Collectors.toList()));
+    }
+
+    @Override
     public void update(final EnumSet<CombineMethod> combineMethods,
             final int multiplier) {
         this.combineMethods = combineMethods;
@@ -50,7 +62,7 @@ public class ColorCombinerBus extends Observable implements CombinerProvider {
     }
 
     @Override
-    public EnumSet<CombineMethod> getCombineMethods() {
+    public EnumSet<CombineMethod> getSelected() {
         return combineMethods;
     }
 

@@ -2,21 +2,26 @@ package work.samoje.colors.combiner.combiners;
 
 import java.util.Random;
 
-public class RGBNoisyAvg extends BinaryValueWiseCombiner {
+/**
+ * Combines colors by taking the RGB value-wise average, and adding in some noise.
+ *
+ * @author Jennie Sadler
+ */
+public class RGBNoisyAvg extends RGBValueWiseCombiner {
     private final Random rand = new Random();
-    private final double randomnessRange;
+    private final double colorNoiseMultiplier;
 
-    public RGBNoisyAvg(final double modifier, final double modifierScale) {
-        this.randomnessRange = (modifier * 255.0) / modifierScale;
+    public RGBNoisyAvg(final double multiplier, final double maxMultiplier) {
+        this.colorNoiseMultiplier = (multiplier * MAX_COLOR_VAL) / maxMultiplier;
     }
 
     @Override
     protected int combine(final int left, final int right) {
-        return Math.max(0, Math.min(255, (left + right + randPlusMinus()) / 2));
+        return boundByColorRange(avg(left, right + noise()));
     }
 
-    private int randPlusMinus() {
-        final int range = Math.max(1, (int) randomnessRange);
-        return (rand.nextInt(range * 2) - range);
+    private int noise() {
+        final int plusOrMinusValue = Math.max(1, (int) colorNoiseMultiplier);
+        return (rand.nextInt(plusOrMinusValue * 2) - plusOrMinusValue);
     }
 }

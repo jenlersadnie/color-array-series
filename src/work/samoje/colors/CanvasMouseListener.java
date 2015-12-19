@@ -1,5 +1,6 @@
 package work.samoje.colors;
 
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.util.HashSet;
@@ -10,12 +11,32 @@ import javax.swing.event.MouseInputAdapter;
 import work.samoje.colors.drawing.ColorOverrideProvider;
 import work.samoje.colors.grid.Canvas;
 
+/**
+ * {@link MouseInputAdapter} for receiving click & drag actions against the
+ * {@link Canvas}. Translates these actions into commands to write the
+ * {@link ColorOverrideProvider}'s active {@link Color} to the edges of the
+ * {@link Canvas}.
+ *
+ * This listener is not thread-safe.
+ *
+ * @author Jennie Sadler
+ *
+ */
 public class CanvasMouseListener extends MouseInputAdapter {
     private Point startPoint = new Point(0, 0);
 
     private final Canvas canvas;
     private final ColorOverrideProvider colorOverrideProvider;
 
+    /**
+     * Default constructor.
+     *
+     * @param canvas
+     *            {@link Canvas} to write against
+     * @param colorOverrideProvider
+     *            {@link ColorOverrideProvider} which specifies the
+     *            {@link Color} to write to the {@link Canvas}
+     */
     public CanvasMouseListener(final Canvas canvas,
             final ColorOverrideProvider colorOverrideProvider) {
         this.canvas = canvas;
@@ -29,7 +50,7 @@ public class CanvasMouseListener extends MouseInputAdapter {
 
     @Override
     public void mouseReleased(final MouseEvent e) {
-        canvas.writeColorToPoints(pointsBetween(startPoint, e.getPoint()),
+        canvas.writeColorToEdges(pointsBetween(startPoint, e.getPoint()),
                 colorOverrideProvider.getColor());
     }
 

@@ -2,7 +2,14 @@ package work.samoje.colors.combiner.combiners;
 
 import java.util.Random;
 
-public class RGBChooser extends BinaryValueWiseCombiner {
+/**
+ * When combining two colors, randomly chooses each RGB value from one of the
+ * parents.
+ *
+ * @author Jennie Sadler
+ *
+ */
+public class RGBChooser extends RGBValueWiseCombiner {
     private final Random rand = new Random();
 
     @Override
