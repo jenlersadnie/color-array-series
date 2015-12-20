@@ -91,7 +91,7 @@ public class ColorGrid extends Observable implements Observer {
         for (int x = 2; x < width; x++) {
             grid[0][x] = combiner.combine(grid[0][x - 1], grid[0][x - 2]);
         }
-        recalculateContents();
+        recalculateContents(combiner);
     }
 
     /**
@@ -117,6 +117,9 @@ public class ColorGrid extends Observable implements Observer {
      */
     private void recalculateContents() {
         final ColorCombiner combiner = combinerProvider.getCombiner();
+        recalculateContents(combiner);
+    }
+    private void recalculateContents(final ColorCombiner combiner) {
         for (int y = 1; y < height; y++) {
             for (int x = 1; x < width; x++) {
                 grid[y][x] = combiner.combine(grid[y - 1][x], grid[y][x - 1]);
