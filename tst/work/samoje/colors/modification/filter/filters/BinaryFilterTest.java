@@ -24,7 +24,7 @@ public class BinaryFilterTest {
      * seconds to run.
      */
     @Test
-    public void test_filter_testRoughColorSpectru() {
+    public void test_filter_testRoughColorSpectrum() {
         final BinaryFilter underTest = new BinaryFilter(1, 1);
         for (int r = 0; r < 256; r += 5) {
             for (int g = 0; g < 256; g += 7) {
