@@ -30,7 +30,7 @@ public abstract class IntensityFilter implements Filter {
      *            intensity.
      * @return The result value, filtered to the correct intensity
      */
-    protected int applyIntensity(final int original, final int filtered) {
+    protected int applyIntensity(final double original, final double filtered) {
         return ColorHelpers.boundByColorRange((original * (1.0 - intensity))
                 + (filtered * intensity));
     }

@@ -20,5 +20,5 @@ public abstract class RGBValueWiseFilter extends IntensityFilter {
                 filter(color.getBlue()));
     }
 
-    protected abstract int filter(int value);
+    protected abstract int filter(double value);
 }

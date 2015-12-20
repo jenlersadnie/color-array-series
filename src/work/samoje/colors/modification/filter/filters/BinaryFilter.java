@@ -27,6 +27,6 @@ public class BinaryFilter extends IntensityFilter {
     private int getBinaryValueFor(final Color a) {
         return ColorHelpers
                 .getNearestAbsoluteValue((a.getRed() + a.getGreen() + a
-                        .getBlue()) / 3);
+                        .getBlue()) / 3.0);
     }
 }

@@ -15,7 +15,7 @@ public class RGBAbsolutes extends RGBValueWiseFilter {
     }
 
     @Override
-    protected int filter(final int value) {
+    protected int filter(final double value) {
         return applyIntensity(value,
                 ColorHelpers.getNearestAbsoluteValue(value));
     }

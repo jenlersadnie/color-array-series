@@ -30,6 +30,6 @@ public class ColorHelpers {
      *         equal to the given value.
      */
     public static int boundByColorRange(final double value) {
-        return Math.max(0, (int) Math.min(ColorHelpers.MAX_COLOR_VAL, value));
+        return Math.max(0, (int)Math.round(Math.min(ColorHelpers.MAX_COLOR_VAL, value)));
     }
 }
