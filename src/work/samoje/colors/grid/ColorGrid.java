@@ -34,6 +34,12 @@ public class ColorGrid extends Observable implements Observer {
      */
     public ColorGrid(final int height, final int width,
             final CombinerSelector combinerProvider) {
+        if (height < 2 || width < 2){
+            throw new IllegalArgumentException(String.format(
+                    "Height [%s] and width [%s] must both be larger than or equal to 2.",
+                    height, width));
+        }
+
         this.height = height;
         this.width = width;
         this.grid = new Color[height][width];
@@ -119,6 +125,7 @@ public class ColorGrid extends Observable implements Observer {
         final ColorCombiner combiner = combinerProvider.getCombiner();
         recalculateContents(combiner);
     }
+
     private void recalculateContents(final ColorCombiner combiner) {
         for (int y = 1; y < height; y++) {
             for (int x = 1; x < width; x++) {
@@ -135,41 +142,43 @@ public class ColorGrid extends Observable implements Observer {
      *
      *   y
      * x-+------------>
-     *   |(0,0)|(0,1)|
-     *   |(1,0)|(1,1)|
-     *   |(2,0)|(2,1)|
+     *   |(0,0)|(1,0)|
+     *   |(0,1)|(1,1)|
+     *   |(0,2)|(1,2)|
      *   V
      *
      * @param x
-     *      Horizontal position of the {@link Color} point desired
+     *            Horizontal position of the {@link Color} point desired
      * @param y
-     *      Vertical position of the {@link Color} point desired
+     *            Vertical position of the {@link Color} point desired
      *
-     * @return {@link Optional} {@link Color} value, empty if value is
-     *      null or position is not on the grid.
+     * @return {@link Optional} {@link Color} value, empty if value is null or
+     *         position is not on the grid.
      *
      */
     protected Optional<Color> getColorForPoint(final int x, final int y) {
-        if (y < 0 || y > height || x < 0 || x > width) {
+        if (y < 0 || y >= height || x < 0 || x >= width) {
             return Optional.empty();
         }
         return Optional.ofNullable(grid[y][x]);
     }
 
-    public Color[] getColorColumn(final int y) {
-        if (y < 0 || y > height) {
-            throw new IllegalArgumentException(
-                    String.format("Column %s does not exist!", y));
+    public Color[] getColorRow(final int rowPosition) {
+        if (rowPosition < 0 || rowPosition >= height) {
+            throw new IllegalArgumentException(String.format(
+                    "Column %s does not exist!", rowPosition));
         }
-        return grid[y].clone();
+        return grid[rowPosition].clone();
     }
 
     /**
-     * Overwrites the edge positions nearest to the given {@link Point}s
-     * with the specified {@link Color}, then recalculates.
+     * Overwrites the edge positions nearest to the given {@link Point}s with
+     * the specified {@link Color}, then recalculates.
      *
-     * @param points The {@link Point}s used for finding the nearest edges.
-     * @param color The {@link Color} to write to the edge positions.
+     * @param points
+     *            The {@link Point}s used for finding the nearest edges.
+     * @param color
+     *            The {@link Color} to write to the edge positions.
      */
     public void writeToNearestEdge(final Set<Point> points, final Color color) {
         for (final Point point : points) {
@@ -185,12 +194,15 @@ public class ColorGrid extends Observable implements Observer {
             grid[0][Math.min(x, width - 1)] = color;
         } else if (y > x) {
             grid[Math.min(y, height - 1)][0] = color;
+        } else if (y == x) {
+            grid[Math.min(y, height - 1)][0] = color;
+            grid[0][Math.min(x, width - 1)] = color;
         }
     }
 
     /**
-     * Returns a {@link GridState} object representing the
-     * active {@link ColorGrid} configuration.
+     * Returns a {@link GridState} object representing the active
+     * {@link ColorGrid} configuration.
      *
      * @return The {@link GridState}
      */
@@ -199,9 +211,9 @@ public class ColorGrid extends Observable implements Observer {
     }
 
     /**
-     * The {@link Observer} override for {@link ColorGrid}.
-     * Triggered by {@link CombinerProvider} changes.
-     * Triggers changes which notify any observers.
+     * The {@link Observer} override for {@link ColorGrid}. Triggered by
+     * {@link CombinerProvider} changes. Triggers changes which notify any
+     * observers.
      */
     @Override
     public void update(final Observable o, final Object arg) {

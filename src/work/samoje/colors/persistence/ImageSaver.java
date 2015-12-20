@@ -104,7 +104,7 @@ public class ImageSaver {
             final BufferedImage bufferedImage) {
         final List<Callable<Void>> runnables = new ArrayList<>();
         for (int x = firstRow; x < lastRow; x++) {
-            runnables.add(new WriteRow(x, grid.getColorColumn(x), filter,
+            runnables.add(new WriteRow(x, grid.getColorRow(x), filter,
                     bufferedImage));
         }
 
