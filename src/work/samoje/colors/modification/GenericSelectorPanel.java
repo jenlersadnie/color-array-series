@@ -47,7 +47,7 @@ public class GenericSelectorPanel<E extends Enum<E>> extends JPanel {
         this.modifierSelector = modifierSelector;
 
         final int numRows = 2 + modifierSelector.getAllOptions().size();
-        this.setPreferredSize(new Dimension(160, numRows * 20));
+        this.setPreferredSize(new Dimension(160, numRows * 25));
         this.setLayout(new GridLayout(numRows, 1));
 
         this.valueSelector = new JSlider(0, modifierSelector.getMaxMultiplier());

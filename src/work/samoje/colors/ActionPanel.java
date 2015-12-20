@@ -1,5 +1,6 @@
 package work.samoje.colors;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -7,9 +8,12 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.UUID;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 
 import work.samoje.colors.drawing.ColorSelectorPanel;
 import work.samoje.colors.grid.Canvas;
@@ -36,6 +40,8 @@ import work.samoje.colors.modification.filter.selection.FilterSelector;
  */
 public class ActionPanel extends JPanel {
     private static final long serialVersionUID = 1L;
+    private static final int PANEL_WIDTH = 200;
+    private static final int PANEL_HEIGHT = 780;
     private final Canvas canvas;
     private final CombinePanel combinePanel;
 
@@ -62,15 +68,21 @@ public class ActionPanel extends JPanel {
         this.canvas = canvas;
         this.combinePanel = new CombinePanel(combinerBus);
 
-        this.setPreferredSize(new Dimension(200, 780));
-        this.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 40));
+        this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
+        this.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20));
 
+        this.add(new JLabel("Ink color selection"));
         this.add(colorSelectorPanel);
+        this.add(newSeparator());
+        this.add(new JLabel("Color combiner selection"));
         this.add(combinePanel);
+        this.add(newSeparator());
+        this.add(new JLabel("Filter selection"));
         this.add(new FilterPanel(filterBus));
+        this.add(newSeparator());
 
         final JPanel buttonsPanel = new JPanel();
-        buttonsPanel.setPreferredSize(new Dimension(200, 150));
+        buttonsPanel.setPreferredSize(new Dimension(PANEL_WIDTH, 150));
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 5));
         final JButton reinit = new JButton("Renitialize");
         reinit.addActionListener(new ReinitializeButtonListener());
@@ -86,6 +98,14 @@ public class ActionPanel extends JPanel {
         this.add(buttonsPanel);
 
         validate();
+    }
+
+    private JSeparator newSeparator()
+    {
+        final JSeparator sep = new JSeparator();
+        sep.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        sep.setPreferredSize(new Dimension(PANEL_WIDTH, 1));
+        return sep;
     }
 
     /**
@@ -137,7 +157,7 @@ public class ActionPanel extends JPanel {
     }
 
     private String getDefaultPath() {
-        return String.format("out/color-array-%s/", UUID.randomUUID());
+        return String.format("color-array-out/%s/", UUID.randomUUID());
     }
 
     private void makeDirectories(final String path) {

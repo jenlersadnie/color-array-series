@@ -22,7 +22,7 @@ import work.samoje.colors.modification.filter.selection.FilterSelector;
 public class ColorArrayGenerationUI {
     private static final int W = 780;
     private static final int H = 780;
-    private static final int BOX_SIZE = 10;
+    private static final int BOX_SIZE = 1;
 
     public static void main(final String[] args) {
         final ColorArrayGenerationUI GUI = new ColorArrayGenerationUI();

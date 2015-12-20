@@ -33,7 +33,7 @@ public class ColorSelectorPanel extends JPanel implements ColorProvider {
     private final JComponent colorView;
 
     public ColorSelectorPanel() {
-        this.setPreferredSize(new Dimension(160, 120));
+        this.setPreferredSize(new Dimension(160, 80));
 
         this.activeColor = Color.RED;
         this.colorInput = new JTextField("FFFFFF", 4);
