@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import work.samoje.colors.modification.ColorModifierSelector;
-import work.samoje.colors.modification.filter.filters.AbsoluteRGB;
+import work.samoje.colors.modification.filter.filters.RGBAbsolutes;
 import work.samoje.colors.modification.filter.filters.BinaryFilter;
 import work.samoje.colors.modification.filter.filters.Filter;
 import work.samoje.colors.modification.filter.filters.MetaFilter;
@@ -71,7 +71,7 @@ public class FilterSelector extends ColorModifierSelector<FilterMethod>
         filterMap.put(FilterMethod.NONE, new NoFilter());
         filterMap.put(FilterMethod.BINARY, new BinaryFilter(multiplier,
                 getMaxMultiplier()));
-        filterMap.put(FilterMethod.ABSOLUTE_RGB, new AbsoluteRGB(multiplier,
+        filterMap.put(FilterMethod.RGB_ABSOLUTES, new RGBAbsolutes(multiplier,
                 getMaxMultiplier()));
         return filterMap;
     }

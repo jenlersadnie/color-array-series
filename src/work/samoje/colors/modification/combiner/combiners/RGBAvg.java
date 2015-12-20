@@ -8,6 +8,6 @@ package work.samoje.colors.modification.combiner.combiners;
 public class RGBAvg extends RGBValueWiseCombiner {
     @Override
     public int combine(final int left, final int right) {
-        return (int) ((left + right) / 2.0);
+        return (int) avg(left, right);
     }
 }

@@ -9,8 +9,8 @@ import work.samoje.colors.ColorHelpers;
  * @author Jennie Sadler
  *
  */
-public class AbsoluteRGB extends RGBValueWiseFilter {
-    public AbsoluteRGB(final int multiplier, final int maxMultiplier) {
+public class RGBAbsolutes extends RGBValueWiseFilter {
+    public RGBAbsolutes(final int multiplier, final int maxMultiplier) {
         super(multiplier, maxMultiplier);
     }
 

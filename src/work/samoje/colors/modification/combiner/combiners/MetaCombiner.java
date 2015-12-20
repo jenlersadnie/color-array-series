@@ -11,7 +11,7 @@ import java.util.Random;
  * @author Jennie Sadler
  */
 public class MetaCombiner implements ColorCombiner {
-    private final List<ColorCombiner> combiners;
+    private final List<? extends ColorCombiner> combiners;
     private final Random rand = new Random();
 
     /**
@@ -20,7 +20,7 @@ public class MetaCombiner implements ColorCombiner {
      * @param combiners The list of {@link ColorCombiner}s
      * to choose from.
      */
-    public MetaCombiner(final List<ColorCombiner> combiners) {
+    public MetaCombiner(final List<? extends ColorCombiner> combiners) {
         this.combiners = combiners;
     }
 

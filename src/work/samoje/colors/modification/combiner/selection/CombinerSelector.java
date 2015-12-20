@@ -75,7 +75,7 @@ public class CombinerSelector extends ColorModifierSelector<CombineMethod>
         return EnumSet.copyOf(combineMethods);
     }
 
-    public Map<CombineMethod, ColorCombiner> combiners(final int value) {
+    private Map<CombineMethod, ColorCombiner> combiners(final int value) {
         final Map<CombineMethod, ColorCombiner> combineMap = new HashMap<>();
         combineMap.put(CombineMethod.RGB_AVG, new RGBAvg());
         combineMap.put(CombineMethod.RGB_SUM_MOD, new RGBSumMod(value,
